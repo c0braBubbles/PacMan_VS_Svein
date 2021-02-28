@@ -1,5 +1,6 @@
 package com.mycompany.pacman;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -43,11 +44,14 @@ public class App extends Application {
         pacman.startAnimation();
        
  
-        stage.show();*/
+        stage.show();
+    }*/
+        stage.show();
     }
 
     public static void main(String[] args) {
         launch();
+        
     }
 
 }
