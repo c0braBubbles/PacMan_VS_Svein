@@ -42,6 +42,7 @@ public class Ghost {
     
     protected String path; 
     protected double xpos, ypos; 
+    protected double speed; 
     protected Image image; 
     protected FileInputStream stream; 
     protected ImageView view;
@@ -73,6 +74,14 @@ public class Ghost {
     }
     
     
+    protected void setSpeed(Double speed) {
+        this.speed = speed;
+    }
+    protected Double getSpeed() {
+        return speed; 
+    }
+    
+    
     protected Image getImage() {
         return image; 
     }
@@ -94,18 +103,18 @@ public class Ghost {
 
                 if (distanceX > distanceY) {
                     if (ghostX > pacPosX) {
-                        view.setX(ghostX - 1);
+                        view.setX(ghostX - getSpeed());
                     } 
                     else {
-                        view.setX(ghostX + 1);
+                        view.setX(ghostX + getSpeed());
                     }
                 } 
                 else {
                     if(ghostY > pacPosY) {
-                        view.setY(ghostY - 1);
+                        view.setY(ghostY - getSpeed());
                     } 
                     else {
-                        view.setY(ghostY + 1);
+                        view.setY(ghostY + getSpeed());
                     }
                 }
             }
