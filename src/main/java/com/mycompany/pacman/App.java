@@ -31,7 +31,8 @@ import javafx.util.Duration;
  */
 public class App extends Application {
     
-    final int SIZE_X = 800, SIZE_Y = 300;
+    public static final int SIZE_X = 800, SIZE_Y = 300;
+    public static Rectangle rect; 
     String[] paths = {
         "src/main/java/com/mycompany/pacman/red.png",
         "src/main/java/com/mycompany/pacman/blue.png", 
@@ -65,6 +66,11 @@ public class App extends Application {
         
         
         root.getChildren().addAll(pacman.getMrPac(), red.getImageView(), blue.getImageView(), green.getImageView(), yellow.getImageView()); 
+        
+        
+        rect = new Rectangle(100, 100, 100, 100);
+        rect.setFill(Color.BLUE);
+        root.getChildren().add(rect);
         
         
         stage.show();

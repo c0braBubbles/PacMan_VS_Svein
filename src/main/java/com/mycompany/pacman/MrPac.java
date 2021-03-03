@@ -42,8 +42,6 @@ public class MrPac {
     
     public MrPac() {
         setMrPac();
-        //setMovement();
-        //setGaping();
         setAnimation();
     }
     
@@ -108,27 +106,48 @@ public class MrPac {
             public void handle(long currentNanoTime) {
                 if (input.contains("LEFT")) {
                     pacman.setRotate(-180);
-                    pacman.setCenterX(pacman.getCenterX() - getSpeed());
+                    if(pacman.getCenterX() + getSpeed() + pacman.getRadiusX() > pacman.getRadiusX() * 2) {
+                        pacman.setCenterX(pacman.getCenterX() - getSpeed());
+                    }
                 }
 
                 if (input.contains("RIGHT")) {
                     pacman.setRotate(0);
-                    pacman.setCenterX(pacman.getCenterX() + getSpeed());
+                    //canWalk();
+                    if(pacman.getCenterX() + getSpeed() + pacman.getRadiusX() <= App.SIZE_X) { 
+                        pacman.setCenterX(pacman.getCenterX() + getSpeed());
+                    }
+                    
+                    
+                    /* Sjekker kræsj i rect */
+                    if(pacman.getCenterX() + getSpeed() + pacman.getRadiusX() <= App.rect.getX())
+                        pacman.setCenterX(pacman.getCenterX() + getSpeed());
                 }
 
                 if (input.contains("DOWN")) {
                     pacman.setRotate(90);
-                    pacman.setCenterY(pacman.getCenterY() + getSpeed());
+                    //canWalk();
+                    if(pacman.getCenterY() + getSpeed() + pacman.getRadiusX() <= App.SIZE_Y) {
+                        pacman.setCenterY(pacman.getCenterY() + getSpeed());
+                    }
                 }
 
                 if (input.contains("UP")) {
                     pacman.setRotate(-90);
-                    pacman.setCenterY(pacman.getCenterY() - getSpeed());
+                    //canWalk();
+                    if(pacman.getCenterY() - getSpeed() - pacman.getRadiusX()>= 0) {
+                        pacman.setCenterY(pacman.getCenterY() - getSpeed());
+                    }
                 }
             }
         }.start();
         
         pacman.requestFocus();
+    }
+    
+    
+    public boolean canWalk(String code) {
+        return pacman.getCenterX() + getSpeed() + pacman.getRadiusX() > pacman.getRadiusX() * 2; 
     }
     
     
