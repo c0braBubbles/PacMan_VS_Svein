@@ -101,12 +101,16 @@ public class Ghost {
                 double distanceX = Math.abs(pacPosX - view.getX());
                 double distanceY = Math.abs(pacPosY - view.getY());
 
-                if (distanceX > distanceY) {
-                    if (ghostX > pacPosX) {
-                        view.setX(ghostX - getSpeed());
+                if(distanceX > distanceY) {
+                    if(ghostX > pacPosX) {
+                        //view.setX(ghostX - getSpeed());
+                        if(pacman.canWalk("LEFT")) 
+                            view.setX(view.getX() - getSpeed());
                     } 
                     else {
-                        view.setX(ghostX + getSpeed());
+                        //view.setX(ghostX + getSpeed());
+                        if(pacman.canWalk("RIGHT"))
+                            view.setX(view.getX() + getSpeed());
                     }
                 } 
                 else {

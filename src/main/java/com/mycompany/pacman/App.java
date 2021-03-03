@@ -2,6 +2,7 @@ package com.mycompany.pacman;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.ParallelTransition;
@@ -31,8 +32,10 @@ import javafx.util.Duration;
  */
 public class App extends Application {
     
+    public static Rectangle rect;
+    public static Rectangle rect2;
+    public static ArrayList<Rectangle> rectangles = new ArrayList<Rectangle>();
     public static final int SIZE_X = 800, SIZE_Y = 300;
-    public static Rectangle rect; 
     String[] paths = {
         "src/main/java/com/mycompany/pacman/red.png",
         "src/main/java/com/mycompany/pacman/blue.png", 
@@ -75,6 +78,17 @@ public class App extends Application {
         rect = new Rectangle(100, 100, 100, 100);
         rect.setFill(Color.BLUE);
         root.getChildren().add(rect);
+        
+        
+        rect = new Rectangle(100, 100, 100, 100);
+        rect.setFill(Color.BLUE);
+        root.getChildren().add(rect);
+        rectangles.add(rect);
+ 
+        rect2 = new Rectangle(300, 50, 50, 100);
+        rect2.setFill(Color.RED);
+        root.getChildren().add(rect2);
+        rectangles.add(rect2);
         
         
         stage.show();
