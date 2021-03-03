@@ -108,22 +108,34 @@ public class MrPac {
             public void handle(long currentNanoTime) {
                 if (input.contains("LEFT")) {
                     pacman.setRotate(-180);
-                    pacman.setCenterX(pacman.getCenterX() - getSpeed());
+                    if(pacman.getCenterX() + getSpeed() + pacman.getRadiusX() > pacman.getRadiusX() * 2) { //bruk konstant
+                        pacman.setCenterX(pacman.getCenterX() - getSpeed());
+                    }
+
                 }
 
                 if (input.contains("RIGHT")) {
                     pacman.setRotate(0);
-                    pacman.setCenterX(pacman.getCenterX() + getSpeed());
+                    if(pacman.getCenterX() + getSpeed() + pacman.getRadiusX() <= 800) { //bruk konstant
+                        pacman.setCenterX(pacman.getCenterX() + getSpeed());
+                    }
+
                 }
 
                 if (input.contains("DOWN")) {
                     pacman.setRotate(90);
-                    pacman.setCenterY(pacman.getCenterY() + getSpeed());
+                    //pacman.setCenterY(pacman.getCenterY() + getSpeed());
+                    if(pacman.getCenterY() + getSpeed() + pacman.getRadiusX() <= 300) { //bruk konstant
+                        pacman.setCenterY(pacman.getCenterY() + getSpeed());
+                    }
                 }
 
                 if (input.contains("UP")) {
                     pacman.setRotate(-90);
-                    pacman.setCenterY(pacman.getCenterY() - getSpeed());
+                    if(pacman.getCenterY() - getSpeed() - pacman.getRadiusX()>= 0) {
+                        pacman.setCenterY(pacman.getCenterY() - getSpeed());
+                    }
+
                 }
             }
         }.start();
