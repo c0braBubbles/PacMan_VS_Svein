@@ -8,6 +8,7 @@ package com.mycompany.pacman;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.concurrent.TimeUnit;
 
 import javafx.animation.AnimationTimer;
 import javafx.animation.ParallelTransition;
@@ -17,6 +18,7 @@ import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Arc;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
@@ -103,26 +105,58 @@ public class Ghost {
 
                 if(distanceX > distanceY) {
                     if(ghostX > pacPosX) {
-                        //view.setX(ghostX - getSpeed());
-                        if(pacman.canWalk("LEFT")) 
-                            view.setX(view.getX() - getSpeed());
+                        view.setX(ghostX - getSpeed());
+                        try {
+                            ohhShit(pacman);
+                        } catch (FileNotFoundException ex) {
+                            ex.printStackTrace();
+                        }
                     } 
                     else {
-                        //view.setX(ghostX + getSpeed());
-                        if(pacman.canWalk("RIGHT"))
-                            view.setX(view.getX() + getSpeed());
+                        view.setX(ghostX + getSpeed());
+                        try { 
+                            ohhShit(pacman);
+                        } catch (FileNotFoundException ex) {
+                            ex.printStackTrace();
+                        }
                     }
                 } 
                 else {
                     if(ghostY > pacPosY) {
                         view.setY(ghostY - getSpeed());
+                        try {
+                            ohhShit(pacman);
+                        } catch (FileNotFoundException ex) {
+                            ex.printStackTrace();
+                        }
                     } 
                     else {
                         view.setY(ghostY + getSpeed());
+                        try {
+                            ohhShit(pacman);
+                        } catch (FileNotFoundException ex) {
+                            ex.printStackTrace();
+                        }
                     }
                 }
             }
         }.start();
+    }
+    
+    
+    /**
+     * metode for når pacman spiser energitabletter
+     * får spøkelsene til å bli "skremt"
+     */
+    public void ohhShit(MrPac pacman) throws FileNotFoundException {
+        for(Circle cir: App.circles) {
+            if(pacman.hitCircle(cir) && cir.getRadius() > 15) {
+                System.out.println("shit");
+                stream = new FileInputStream(App.paths[4]); 
+                image = new Image(stream);
+                view.setImage(image);
+            }
+        }
     }
     
 }

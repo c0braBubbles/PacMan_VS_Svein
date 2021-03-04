@@ -22,6 +22,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Arc;
 import javafx.scene.shape.ArcType;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -34,19 +35,38 @@ public class App extends Application {
     
     public static Rectangle rect;
     public static Rectangle rect2;
+    public static Rectangle rect3;
     public static ArrayList<Rectangle> rectangles = new ArrayList<Rectangle>();
+    
+    /**
+     * De små sirklene
+     * som bare gir deg litt poeng
+     */
+    public static Circle cir, cir2, cir3; 
+    public static ArrayList<Circle> circles = new ArrayList<Circle>();
+    
+    /**
+     * De store sirklene 
+     * som får spøkelsene til å flykte 
+     */
+    public static Circle bigCir;
+    public static ArrayList<Circle> bigCirc = new ArrayList<Circle>();
+    
     public static final int SIZE_X = 800, SIZE_Y = 300;
-    String[] paths = {
+    public static Pane root;
+    
+    public static String[] paths = {
         "src/main/java/com/mycompany/pacman/red.png",
         "src/main/java/com/mycompany/pacman/blue.png", 
         "src/main/java/com/mycompany/pacman/green.png", 
-        "src/main/java/com/mycompany/pacman/yellow.png"
+        "src/main/java/com/mycompany/pacman/yellow.png",
+        "src/main/java/com/mycompany/pacman/shit.png"
     };
         
     
     @Override
     public void start(Stage stage) throws FileNotFoundException {
-        Pane root = new Pane(); 
+        root = new Pane(); 
         root.setStyle("-fx-background-color: black;");
         
         
@@ -58,7 +78,6 @@ public class App extends Application {
         
         MrPac pacman = new MrPac();
         pacman.setSpeed(3);
-        //root.getChildren().add(pacman.getMrPac());
                 
         
         double xpos = SIZE_X/2, ypos = SIZE_Y/2; 
@@ -70,16 +89,13 @@ public class App extends Application {
         green.setSpeed(1.0);
         Ghost yellow = new Ghost(paths[3], xpos - 200, ypos);
         yellow.setSpeed(1.0);
+        Ghost shit = new Ghost(paths[4], xpos + 200, ypos);
         
         
-        root.getChildren().addAll(pacman.getMrPac(), red.getImageView(), blue.getImageView(), green.getImageView(), yellow.getImageView()); 
+        root.getChildren().addAll(pacman.getMrPac(), red.getImageView(), blue.getImageView(), green.getImageView(), yellow.getImageView(), shit.getImageView()); 
         
         
-        rect = new Rectangle(100, 100, 100, 100);
-        rect.setFill(Color.BLUE);
-        root.getChildren().add(rect);
-        
-        
+        /* Teste kræsj med rektangler */
         rect = new Rectangle(100, 100, 100, 100);
         rect.setFill(Color.BLUE);
         root.getChildren().add(rect);
@@ -90,6 +106,34 @@ public class App extends Application {
         root.getChildren().add(rect2);
         rectangles.add(rect2);
         
+        rect3 = new Rectangle(600, 100, 100, 50); 
+        rect3.setFill(Color.GREEN);
+        root.getChildren().add(rect3); 
+        rectangles.add(rect3);
+        
+        
+        /* Teste sirkler */
+        cir = new Circle(200, 250, 10); 
+        cir.setFill(Color.GRAY);
+        root.getChildren().add(cir); 
+        circles.add(cir); 
+        
+        cir2 = new Circle(250, 250, 10); 
+        cir2.setFill(Color.GRAY);
+        root.getChildren().add(cir2); 
+        circles.add(cir2); 
+        
+        cir3 = new Circle(300, 250, 10); 
+        cir3.setFill(Color.GRAY);
+        root.getChildren().add(cir3); 
+        circles.add(cir3); 
+        
+        /* Teste med store sirkler */
+        bigCir = new Circle(350, 250, 20); 
+        bigCir.setFill(Color.GRAY);
+        root.getChildren().add(bigCir); 
+        circles.add(bigCir);
+        
         
         stage.show();
         pacman.startAnimation();
@@ -97,7 +141,6 @@ public class App extends Application {
         blue.chase(pacman);
         green.chase(pacman);
         yellow.chase(pacman);
-        pacman.setMovement();
     }
     
 

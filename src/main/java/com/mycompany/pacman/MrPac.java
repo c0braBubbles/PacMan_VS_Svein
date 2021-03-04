@@ -18,6 +18,8 @@ import javafx.scene.shape.Path;
 import javafx.util.Duration;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 
 /**
@@ -35,6 +37,7 @@ public class MrPac {
  
  
     protected Arc pacman; 
+    protected Ghost ghost; 
     protected ParallelTransition animation; 
     protected RotateTransition counterclockwise;
     protected RotateTransition clockwise;
@@ -91,7 +94,6 @@ public class MrPac {
  
         pacman.setOnKeyPressed(e -> {
             String code = e.getCode().toString();
- 
             input.clear();
             input.add(code);
         });
@@ -101,45 +103,70 @@ public class MrPac {
                 double pacX = pacman.getCenterX();
                 double pacY = pacman.getCenterY();
  
-                if (input.contains("LEFT")) {
-                    if (canWalk("LEFT")) {
-                        pacman.setCenterX(pacX - getSpeed());
-                        pacman.setRotate(-180);
+                for (Circle cir : App.circles) {
+                    if(input.contains("LEFT")) {
+                        if (canWalk("LEFT")) {
+                            pacman.setCenterX(pacX - getSpeed());
+                            pacman.setRotate(-180);
+                        }
+                        if(hitCircle(cir))
+                            App.root.getChildren().remove(cir); 
+                    }
+ 
+                    if(input.contains("RIGHT")) {
+                        if (canWalk("RIGHT")) {
+                            pacman.setCenterX(pacX + getSpeed());
+                            pacman.setRotate(0);
+                        }
+                        if(hitCircle(cir))
+                            App.root.getChildren().remove(cir); 
+                    }
+ 
+                    if(input.contains("UP")) {
+                        if (canWalk("UP")) {
+                            pacman.setCenterY(pacY - getSpeed());
+                            pacman.setRotate(-90);
+                        }
+                        if(hitCircle(cir))                        
+                            App.root.getChildren().remove(cir); 
+
+                    }
+ 
+                    if(input.contains("DOWN")) {
+                        if (canWalk("DOWN")) {
+                            pacman.setCenterY(pacY + getSpeed());
+                            pacman.setRotate(90);
+                        }
+                        if(hitCircle(cir))
+                            App.root.getChildren().remove(cir);
                     }
                 }
- 
-                if (input.contains("RIGHT")) {
-                    if (canWalk("RIGHT")) {
-                        pacman.setCenterX(pacX + getSpeed());
-                        pacman.setRotate(0);
-                    }
-                }
- 
-                if (input.contains("UP")) {
-                    if (canWalk("UP")) {
-                        pacman.setCenterY(pacY - getSpeed());
-                        pacman.setRotate(-90);
-                    }
-                }
- 
-                if (input.contains("DOWN")) {
-                    if (canWalk("DOWN")) {
-                        pacman.setCenterY(pacY + getSpeed());
-                        pacman.setRotate(90);
-                    }
-                }
- 
-                /*
-                                    pacman.setRotate(-90);
-                    //canWalk();
-                    if(pacman.getCenterY() - getSpeed() - pacman.getRadiusX()>= 0) {
-                        pacman.setCenterY(pacman.getCenterY() - getSpeed());
-                 */
             }
         }.start();
- 
         pacman.requestFocus();
     }
+    
+    
+    public boolean hitCircle(Circle cir) {
+        double pacPosX = pacman.getCenterX() + pacman.getRadiusX(); 
+        double pacPosY = pacman.getCenterY() + pacman.getRadiusY(); 
+        
+        double cirPosX = cir.getCenterX() + cir.getRadius(); 
+        double cirPosY = cir.getCenterY() + cir.getRadius(); 
+        
+        if(pacPosX > cirPosX-cir.getRadius() && pacPosX < cirPosX+cir.getRadius()) {   
+            if(pacPosY > cirPosY-cir.getRadius() && pacPosY < cirPosY+cir.getRadius()) {
+                /*if(cir.getRadius() > 10) {
+                    //run();
+                    return true; 
+                }*/
+                return true; 
+            }
+        }
+            
+        return false; 
+    }
+    
  
     public boolean canWalk(String code) {
         double pacX = pacman.getCenterX();
@@ -151,22 +178,76 @@ public class MrPac {
         double recty1 = App.rect.getY();
         double recty2 = recty1 + App.rect.getHeight();
  
-        if (code.equals("LEFT")) {
-            if (pacX - pacman.getRadiusX() > 0) {
-                for (Rectangle rect : App.rectangles) {
+        if(code.equals("LEFT")) {
+            if(pacX - pacman.getRadiusX() > 0) {
+                for(Rectangle rect : App.rectangles) {
                     rectx1 = rect.getX();
                     rectx2 = rectx1 + rect.getWidth();
  
                     recty1 = rect.getY();
                     recty2 = recty1 + rect.getHeight();
  
-                    if ((pacY > recty1 && pacY < recty2)) {
-                        if (pacX - pacman.getRadiusX() > rectx2) {
+                    if((pacY > recty1 && pacY < recty2)) {
+                        if(pacX - pacman.getRadiusX() > rectx2) {
                             continue;
-                        } else if (pacX - pacman.getRadiusX() < rectx1) {
+                        } 
+                        else if (pacX - pacman.getRadiusX() < rectx1) {
                             continue;
                         }
-                    } else {
+                    } 
+                    else {
+                        continue;
+                    }
+                    return false;
+                } 
+                return true;
+            }
+        } 
+        
+        else if(code.equals("RIGHT")) {
+            if(pacX + pacman.getRadiusX() < App.SIZE_X) {
+                for(Rectangle rect : App.rectangles) {
+                    rectx1 = rect.getX();
+                    rectx2 = rectx1 + rect.getWidth();
+ 
+                    recty1 = rect.getY();
+                    recty2 = recty1 + rect.getHeight();
+ 
+                    if((pacY > recty1 && pacY < recty2)) {
+                        if(pacX + pacman.getRadiusX() < rectx1) {
+                            continue;
+                        } 
+                        else if(pacX + pacman.getRadiusX() > rectx2) {
+                            continue;
+                        }
+                    } 
+                    else {
+                        continue;
+                    }
+                    return false;
+                }
+                return true;
+            }
+        } 
+        
+        else if(code.equals("UP")) {
+            if(pacY - pacman.getRadiusY() > 0) {
+                for(Rectangle rect : App.rectangles) {
+                    rectx1 = rect.getX();
+                    rectx2 = rectx1 + rect.getWidth();
+ 
+                    recty1 = rect.getY();
+                    recty2 = recty1 + rect.getHeight();
+ 
+                    if(pacX > rectx1 && pacX < rectx2) {
+                        if(pacY - pacman.getRadiusY() < recty1) {
+                            continue;
+                        } 
+                        else if(pacY - pacman.getRadiusY() > recty2) {
+                            continue;
+                        }
+                    } 
+                    else {
                         continue;
                     }
  
@@ -175,80 +256,36 @@ public class MrPac {
  
                 return true;
             }
-        } else if (code.equals("RIGHT")) {
-            if (pacX + pacman.getRadiusX() < App.SIZE_X) {
-                for (Rectangle rect : App.rectangles) {
+        } 
+        
+        else if(code.equals("DOWN")) {
+            if(pacY + pacman.getRadiusY() < App.SIZE_Y) {
+                for(Rectangle rect : App.rectangles) {
                     rectx1 = rect.getX();
                     rectx2 = rectx1 + rect.getWidth();
  
                     recty1 = rect.getY();
                     recty2 = recty1 + rect.getHeight();
  
-                    if ((pacY > recty1 && pacY < recty2)) {
-                        if (pacX + pacman.getRadiusX() < rectx1) {
+                    if(pacX > rectx1 && pacX < rectx2) {
+                        if(pacY + pacman.getRadiusY() < recty1) {
                             continue;
-                        } else if (pacX + pacman.getRadiusX() > rectx2) {
-                            continue;
-                        }
-                    } else {
-                        continue;
-                    }
- 
-                    return false;
-                }
- 
-                return true;
-            }
-        } else if (code.equals("UP")) {
-            if (pacY - pacman.getRadiusY() > 0) {
-                for (Rectangle rect : App.rectangles) {
-                    rectx1 = rect.getX();
-                    rectx2 = rectx1 + rect.getWidth();
- 
-                    recty1 = rect.getY();
-                    recty2 = recty1 + rect.getHeight();
- 
-                    if (pacX > rectx1 && pacX < rectx2) {
-                        if (pacY - pacman.getRadiusY() < recty1) {
-                            continue;
-                        } else if (pacY - pacman.getRadiusY() > recty2) {
+                        } 
+                        else if(pacY + pacman.getRadiusY() > recty2) {
                             continue;
                         }
-                    } else {
+                    } 
+                    else {
                         continue;
                     }
- 
+                    
                     return false;
                 }
- 
-                return true;
-            }
-        } else if (code.equals("DOWN")) {
-            if (pacY + pacman.getRadiusY() < App.SIZE_Y) {
-                for (Rectangle rect : App.rectangles) {
-                    rectx1 = rect.getX();
-                    rectx2 = rectx1 + rect.getWidth();
- 
-                    recty1 = rect.getY();
-                    recty2 = recty1 + rect.getHeight();
- 
-                    if (pacX > rectx1 && pacX < rectx2) {
-                        if (pacY + pacman.getRadiusY() < recty1) {
-                            continue;
-                        } else if (pacY + pacman.getRadiusY() > recty2) {
-                            continue;
-                        }
-                    } else {
-                        continue;
-                    }
- 
-                    return false;
-                }
- 
+                
                 return true;
             }
         }
- 
+        
         return false;
     }
  
