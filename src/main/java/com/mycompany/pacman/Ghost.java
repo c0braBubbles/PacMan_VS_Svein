@@ -161,6 +161,9 @@ public class Ghost {
         double posX = view.getX(); 
         double posY = view.getY();
         
+        double pacPosX = pacman.getMrPac().getCenterX();
+        double pacPosY = pacman.getMrPac().getCenterY();
+        
         double rectx1 = App.rect.getX(); 
         double rectx2 = rectx1 + App.rect.getWidth();
         
@@ -169,10 +172,11 @@ public class Ghost {
         
         double distanceX = Math.abs(pacman.getMrPac().getCenterX() - view.getX());
         double distanceY = Math.abs(pacman.getMrPac().getCenterY() - view.getY());
+
+        for(Rectangle rect: App.rectangles) {
         
-        if(distanceX > distanceY) {
+        if(posX > rect.getX()) {
             if(posX - view.getFitWidth() > 0) {
-                for(Rectangle rect: App.rectangles) {
                     rectx1 = rect.getX(); 
                     rectx2 = rectx1 + rect.getWidth(); 
                     
@@ -187,10 +191,11 @@ public class Ghost {
                     }
                     else 
                         continue; 
-                    return false; 
-                }
-                return true; 
+                    return false;                 
             }
+            return false;
+        }
+     
         }
         
         return false; 
