@@ -100,7 +100,7 @@ public class App extends Application {
         mp.getChildren().addAll(pacman.getMrPac(), red.getImageView(), blue.getImageView(), green.getImageView(), yellow.getImageView(), shit.getImageView()); 
         
         
-        /* Teste kræsj med rektangler */
+        /* Teste kræsj med rektangler *//*
         rect = new Rectangle(100, 100, 100, 100);
         rect.setFill(Color.BLUE);
         mp.getChildren().add(rect);
@@ -117,7 +117,7 @@ public class App extends Application {
         rectangles.add(rect3);
         
         
-        /* Teste sirkler */
+        /* Teste sirkler *//*
         cir = new Circle(200, 250, 10); 
         cir.setFill(Color.GRAY);
         mp.getChildren().add(cir); 
@@ -133,12 +133,12 @@ public class App extends Application {
         mp.getChildren().add(cir3); 
         circles.add(cir3); 
         
-        /* Teste med store sirkler */
+        /* Teste med store sirkler *//*
         bigCir = new Circle(350, 250, 20); 
         bigCir.setFill(Color.GRAY);
         mp.getChildren().add(bigCir); 
         circles.add(bigCir);
-        
+        */
         
         stage.show();
         pacman.startAnimation();
