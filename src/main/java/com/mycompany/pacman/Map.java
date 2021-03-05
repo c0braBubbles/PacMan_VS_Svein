@@ -1,28 +1,43 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * 
  */
 package com.mycompany.pacman;
 
-import javafx.scene.paint.Color;
-
 /**
  *
- * @author milcunicorn
+ * @author svein
  */
-public class Map {    
-    protected Color backgroundColor;
-    protected Color mainColor;
-
-    public Map() {
-        backgroundColor = Color.BLACK;
-        mainColor = Color.ALICEBLUE;
+public class Map extends MapStructure {
+    MapStructure ms;
+    
+    public Map(){
+       super();
     }
     
-    public Map(Color backgroundColor, Color mainColor) {
-        this.backgroundColor = backgroundColor;
-        this.mainColor = mainColor;
+    public void generateMap() {
+        for(String[] sa: ms.getMapData()){
+            for(int i=0;i<sa.length; i++){
+                switch(sa[i]){
+                    case "K": // kant
+                        break;
+                    case "0": // kant inne i kartet
+                        break;
+                    case "A": // mat for pacman
+                        break;
+                    case "C": // "chase ability" for pacman
+                        break;
+                    case "Y": // ingen mat
+                        break;
+                    case "X": // tomt
+                        break;
+                    case "S": // spøkelse spawn
+                        break;
+                    case "U": // dør spøkelse spawn 
+                        break;
+                    case "B": // spøkelse bur
+                    default:
+                }
+            }
+        }
     }
-    
 }
