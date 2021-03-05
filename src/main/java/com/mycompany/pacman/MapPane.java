@@ -7,7 +7,7 @@ package com.mycompany.pacman;
  *
  * @author svein
  */
-public class MapPane extends Map{
+public class MapPane extends Map {
     MapStructure ms;
     
     public MapPane(){
