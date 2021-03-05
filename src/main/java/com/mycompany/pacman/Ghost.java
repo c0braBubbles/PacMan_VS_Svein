@@ -14,6 +14,9 @@ import javafx.animation.AnimationTimer;
 import javafx.animation.ParallelTransition;
 import javafx.animation.PathTransition;
 import javafx.animation.SequentialTransition;
+import javafx.concurrent.Task;
+import javafx.concurrent.WorkerStateEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -151,12 +154,41 @@ public class Ghost {
     public void ohhShit(MrPac pacman) throws FileNotFoundException {
         for(Circle cir: App.circles) {
             if(pacman.hitCircle(cir) && cir.getRadius() > 15) {
-                System.out.println("shit");
                 stream = new FileInputStream(App.paths[4]); 
                 image = new Image(stream);
                 view.setImage(image);
+                changeBack(cir);
             }
         }
+    }
+    
+    
+    public void changeBack(Circle cir) {
+        Task<Void> sleeper = new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+                try {
+                    Thread.sleep(5000);
+                } catch(InterruptedException e) {
+        
+                }
+                return null; 
+            }
+        };
+        sleeper.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+            @Override
+            public void handle(WorkerStateEvent t) {
+                try {
+                    stream = new FileInputStream(path);
+                } catch (FileNotFoundException ex) {
+                    ex.printStackTrace();
+                }
+                image = new Image(stream);
+                view.setImage(image);
+                App.circles.remove(cir);
+            }
+        });
+        new Thread(sleeper).start();
     }
     
 }

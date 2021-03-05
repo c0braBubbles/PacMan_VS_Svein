@@ -109,8 +109,9 @@ public class MrPac {
                             pacman.setCenterX(pacX - getSpeed());
                             pacman.setRotate(-180);
                         }
-                        if(hitCircle(cir))
-                            App.root.getChildren().remove(cir); 
+                        if(hitCircle(cir)) {
+                            App.root.getChildren().remove(cir);
+                        }
                     }
  
                     if(input.contains("RIGHT")) {
@@ -118,8 +119,9 @@ public class MrPac {
                             pacman.setCenterX(pacX + getSpeed());
                             pacman.setRotate(0);
                         }
-                        if(hitCircle(cir))
-                            App.root.getChildren().remove(cir); 
+                        if(hitCircle(cir)) {
+                            App.root.getChildren().remove(cir);
+                        }
                     }
  
                     if(input.contains("UP")) {
@@ -127,9 +129,9 @@ public class MrPac {
                             pacman.setCenterY(pacY - getSpeed());
                             pacman.setRotate(-90);
                         }
-                        if(hitCircle(cir))                        
+                        if(hitCircle(cir)) {             
                             App.root.getChildren().remove(cir); 
-
+                        }
                     }
  
                     if(input.contains("DOWN")) {
@@ -137,8 +139,9 @@ public class MrPac {
                             pacman.setCenterY(pacY + getSpeed());
                             pacman.setRotate(90);
                         }
-                        if(hitCircle(cir))
+                        if(hitCircle(cir)) {
                             App.root.getChildren().remove(cir);
+                        }
                     }
                 }
             }
@@ -154,12 +157,8 @@ public class MrPac {
         double cirPosX = cir.getCenterX() + cir.getRadius(); 
         double cirPosY = cir.getCenterY() + cir.getRadius(); 
         
-        if(pacPosX > cirPosX-cir.getRadius() && pacPosX < cirPosX+cir.getRadius()) {   
-            if(pacPosY > cirPosY-cir.getRadius() && pacPosY < cirPosY+cir.getRadius()) {
-                /*if(cir.getRadius() > 10) {
-                    //run();
-                    return true; 
-                }*/
+        if(pacman.getCenterX() > cir.getCenterX()-cir.getRadius() && pacman.getCenterX() < cir.getCenterX()+cir.getRadius()) {   
+            if(pacman.getCenterY() > cir.getCenterY()-cir.getRadius() && pacman.getCenterY() < cir.getCenterY()+cir.getRadius()) {
                 return true; 
             }
         }
