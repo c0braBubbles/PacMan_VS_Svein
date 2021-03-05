@@ -107,14 +107,24 @@ public class Ghost {
                 double distanceY = Math.abs(pacPosY - view.getY());
 
                 if(distanceX > distanceY) {
-                    if(ghostX > pacPosX) {
+                    /*if(ghostX > pacPosX) {
                         view.setX(ghostX - getSpeed());
                         try {
                             ohhShit(pacman);
                         } catch (FileNotFoundException ex) {
                             ex.printStackTrace();
                         }
-                    } 
+                    } */
+                    if(ghostX > pacPosX) {
+                        if(canWalk(pacman)) {
+                            view.setX(ghostX - getSpeed());
+                            try {
+                                ohhShit(pacman); 
+                            } catch(FileNotFoundException ex) {
+                                ex.printStackTrace();
+                            }
+                        }
+                    }
                     else {
                         view.setX(ghostX + getSpeed());
                         try { 
@@ -144,6 +154,46 @@ public class Ghost {
                 }
             }
         }.start();
+    }
+    
+    
+    public boolean canWalk(MrPac pacman) {
+        double posX = view.getX(); 
+        double posY = view.getY();
+        
+        double rectx1 = App.rect.getX(); 
+        double rectx2 = rectx1 + App.rect.getWidth();
+        
+        double recty1 = App.rect.getY(); 
+        double recty2 = App.rect.getX(); 
+        
+        double distanceX = Math.abs(pacman.getMrPac().getCenterX() - view.getX());
+        double distanceY = Math.abs(pacman.getMrPac().getCenterY() - view.getY());
+        
+        if(distanceX > distanceY) {
+            if(posX - view.getFitWidth() > 0) {
+                for(Rectangle rect: App.rectangles) {
+                    rectx1 = rect.getX(); 
+                    rectx2 = rectx1 + rect.getWidth(); 
+                    
+                    recty1 = rect.getY(); 
+                    recty2 = recty1 + rect.getHeight();
+                    
+                    if((posY > recty1 && posY < recty2)) {
+                        if(posX - view.getFitWidth() > rectx2)
+                            continue; 
+                        else if(posX - view.getFitWidth() < rectx1)
+                            continue; 
+                    }
+                    else 
+                        continue; 
+                    return false; 
+                }
+                return true; 
+            }
+        }
+        
+        return false; 
     }
     
     
