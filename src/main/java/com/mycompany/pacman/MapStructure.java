@@ -59,7 +59,7 @@ public class MapStructure {
      * der objektene er String[]
      * 
      * @param path er filepath til standard kartfile
-     * @return Object[] innerholder data struktur for kart
+     *
      */
     public void readFile(String path){
         ArrayList<String[]> al = new ArrayList<>();
