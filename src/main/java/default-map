@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 K,K,K,K,K,K,K,K,K,K,K,K,K,K,K,K,K,K,K
 K,A,0,0,A,0,0,0,A,0,A,0,0,0,A,0,0,A,K,
 K,A,0,0,A,0,0,0,A,0,A,0,0,0,A,0,0,A,K,
@@ -9,3 +10,27 @@ X,X,X,0,A,0,Y,Y,Y,Y,Y,Y,Y,0,A,0,X,X,K,
 K,0,0,0,A,0,Y,0,0,U,0,0,Y,0,A,0,0,0,K,
 Y,Y,Y,Y,A,Y,Y,0,S,S,S,S,0,Y,Y,A,Y,Y,K,
 F
+=======
+K,K,K,K,K,K,K,K,K,K,K,K,K,K,K,K,K,K,K,
+K,A,A,A,A,A,A,A,A,A,A,A,A,A,A,A,A,A,K
+K,A,0,0,A,0,0,0,A,0,A,0,0,0,A,0,0,A,K,
+K,C,0,0,A,0,0,0,A,0,A,0,0,0,A,0,0,C,K,
+K,A,A,A,A,A,A,A,A,A,A,A,A,A,A,A,A,A,K,
+K,A,0,0,A,0,A,0,0,0,0,0,A,0,A,0,0,A,K,
+K,A,A,A,A,0,A,A,A,0,A,A,A,0,A,A,A,A,K,
+K,K,K,K,A,0,0,0,Y,0,Y,0,0,0,A,K,K,K,K,
+X,X,X,K,A,0,Y,Y,Y,Y,Y,Y,Y,0,A,K,X,X,X,
+K,K,K,K,A,0,Y,B,B,U,B,B,Y,0,A,K,K,K,K,
+Y,Y,Y,Y,A,Y,Y,B,S,S,S,B,Y,Y,A,Y,Y,Y,Y,
+Y,Y,Y,Y,A,Y,Y,B,S,S,S,B,Y,Y,A,Y,Y,Y,Y,
+K,K,K,K,A,0,Y,B,B,B,B,B,Y,0,A,K,K,K,K,
+X,X,X,K,A,0,Y,Y,Y,Y,Y,Y,Y,0,A,K,X,X,X,
+K,K,K,K,A,0,0,0,Y,0,Y,0,0,0,A,K,K,K,K,
+K,A,A,A,A,0,A,A,A,0,A,A,A,0,A,A,A,A,K,
+K,A,0,0,A,0,A,0,0,0,0,0,A,0,A,0,0,A,K,
+K,A,A,A,A,A,A,A,A,A,A,A,A,A,A,A,A,A,K,
+K,C,0,0,A,0,0,0,A,0,A,0,0,0,A,0,0,C,K,
+K,A,0,0,A,0,0,0,A,0,A,0,0,0,A,0,0,A,K,
+K,A,A,A,A,A,A,A,A,A,A,A,A,A,A,A,A,A,K
+K,K,K,K,K,K,K,K,K,K,K,K,K,K,K,K,K,K,K,
+>>>>>>> b52fe48cbcddfade167ff3ae7075475aa3722b4e

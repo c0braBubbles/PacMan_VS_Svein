@@ -1,7 +1,7 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Leser in fra fil,
+ * 
+ * 
  */
 package com.mycompany.pacman;
 
@@ -16,54 +16,59 @@ import java.util.Scanner;
  * @author sveni
  */
 public class MapStructure {
-    public static final String NEW_LINE = "NL";
-    public static final String DEFULT_FILE_PATH = "src/main/java/default-map";
-    private Object[] mapStructure;
+    protected static final String DEFULT_FILE_PATH = "src/main/java/";
+    protected static final String MAP_DATA_STRUCTURE_FILE = DEFULT_FILE_PATH +"default-map";
+    protected Object[] dataObject;
+    private String[][] mapData;
     
     /**
      * default MapStructure
      */
     public MapStructure(){
-        mapStructure = readFile(DEFULT_FILE_PATH);  
+        setMapData(dataObject);
     }
-    
-    public Object[] getMapData(){
-        return mapStructure;
-    }
-    
-    public void genrateNewMap(){
-        for(Object o:getMapData()){
-            for(int i=0; i<((String[])o).length; i++){
-                var rad = (String[])o;
-                width =0;
-                switch(rad[i]){
-                    case "K": width=width+1;
-                    break;
-                    default:
-                    break;
-                }
-                
-            }
-        }
-        
-    }
-    
-    
-    
     
     /**
-     *
-     * @param path er filepath til kartfile
-     * @return string[] som innerholder data struktur
+     * Legger String[] fra dataObject
+     * in i String[][] mapData
+     * 
+     * @param oa er Object[] med String[] som objekter
      */
-    protected final Object[] readFile(String path){
+    protected final void setMapData(Object[] oa){
+        readFile(MAP_DATA_STRUCTURE_FILE);
+        mapData = new String
+            [oa.length]
+            [((String[])oa[0]).length];
+        for(int i=0; i<oa.length; i++){
+            mapData[i] = (String[])oa[i];
+        }
+    }
+    
+    public String[][] getMapData(){
+        return mapData;
+    }
+    
+    public void genrateNewMap() throws NoSuchMethodException {
+      throw new NoSuchMethodException("No methode");
+    }
+    
+    /**
+     * 
+     * Leser datastruktur fra fil som string
+     * Datastrukturen blir returnert som Object[],
+     * der objektene er String[]
+     * 
+     * @param path er filepath til standard kartfile
+     *
+     */
+    public void readFile(String path){
         ArrayList<String[]> al = new ArrayList<>();
         try {
             File file = new File(path);
             Scanner scanner = new Scanner(file);
             while(scanner.hasNext()) {
-                
                 if(scanner.hasNextLine()){
+                    // lager liste av hvær linje i datastruktren fra fil
                     al.add(scanner.nextLine().split(","));
                 }
                 
@@ -72,14 +77,17 @@ public class MapStructure {
         }catch(FileNotFoundException e){
             System.out.println("File not found");
         }
-        return al.toArray();
+        dataObject = al.toArray();
     }
     
     @Override
     public String toString(){
        String s = "";
-       for(Object o: getMapData()){
-          s += Arrays.toString(((String[])o));
+       for(String[] sa: mapData){
+          s += Arrays.toString(sa)
+                .replace("[", "")
+                .replace("]", "")
+                +"\n";
        }
        return s;
     }
