@@ -17,7 +17,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Arc;
@@ -52,7 +53,8 @@ public class App extends Application {
     public static Circle bigCir, bigCir2;
     
     public static final int SIZE_X = 800, SIZE_Y = 300;
-    public static Pane root;
+    public static BorderPane root;
+    public static MapPane mp;
     
     public static String[] paths = {
         "src/main/java/com/mycompany/pacman/red.png",
@@ -65,8 +67,11 @@ public class App extends Application {
     
     @Override
     public void start(Stage stage) throws FileNotFoundException {
-        root = new Pane(); 
+        root = new BorderPane();
         root.setStyle("-fx-background-color: black;");
+        
+        // MapPane oppsett
+        mp = new MapPane();
         
         
         /* Scene-oppsett */
@@ -91,46 +96,47 @@ public class App extends Application {
         Ghost shit = new Ghost(paths[4], xpos + 200, ypos);
         
         
-        root.getChildren().addAll(pacman.getMrPac(), red.getImageView(), blue.getImageView(), green.getImageView(), yellow.getImageView(), shit.getImageView()); 
+        root.setCenter(mp); 
+        mp.getChildren().addAll(pacman.getMrPac(), red.getImageView(), blue.getImageView(), green.getImageView(), yellow.getImageView(), shit.getImageView()); 
         
         
         /* Teste kræsj med rektangler */
         rect = new Rectangle(100, 100, 100, 100);
         rect.setFill(Color.BLUE);
-        root.getChildren().add(rect);
+        mp.getChildren().add(rect);
         rectangles.add(rect);
  
         rect2 = new Rectangle(300, 50, 50, 100);
         rect2.setFill(Color.RED);
-        root.getChildren().add(rect2);
+        mp.getChildren().add(rect2);
         rectangles.add(rect2);
         
         rect3 = new Rectangle(600, 100, 100, 50); 
         rect3.setFill(Color.GREEN);
-        root.getChildren().add(rect3); 
+        mp.getChildren().add(rect3); 
         rectangles.add(rect3);
         
         
         /* Teste sirkler */
         cir = new Circle(200, 250, 10); 
         cir.setFill(Color.GRAY);
-        root.getChildren().add(cir); 
+        mp.getChildren().add(cir); 
         circles.add(cir); 
         
         cir2 = new Circle(250, 250, 10); 
         cir2.setFill(Color.GRAY);
-        root.getChildren().add(cir2); 
+        mp.getChildren().add(cir2); 
         circles.add(cir2); 
         
         cir3 = new Circle(300, 250, 10); 
         cir3.setFill(Color.GRAY);
-        root.getChildren().add(cir3); 
+        mp.getChildren().add(cir3); 
         circles.add(cir3); 
         
         /* Teste med store sirkler */
         bigCir = new Circle(350, 250, 20); 
         bigCir.setFill(Color.GRAY);
-        root.getChildren().add(bigCir); 
+        mp.getChildren().add(bigCir); 
         circles.add(bigCir);
         
         
