@@ -88,9 +88,10 @@ public class App extends Application {
         green.setSpeed(1.0);
         Ghost yellow = new Ghost(paths[3], xpos - 200, ypos);
         yellow.setSpeed(1.0);
+        Ghost shit = new Ghost(paths[4], xpos + 200, ypos);
         
         
-        root.getChildren().addAll(pacman.getMrPac(), red.getImageView(), blue.getImageView(), green.getImageView(), yellow.getImageView()); 
+        root.getChildren().addAll(pacman.getMrPac(), red.getImageView(), blue.getImageView(), green.getImageView(), yellow.getImageView(), shit.getImageView()); 
         
         
         /* Teste kræsj med rektangler */

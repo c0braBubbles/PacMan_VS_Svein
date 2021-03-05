@@ -245,9 +245,10 @@ public class Ghost {
     
     
     public boolean isEaten(MrPac pacman) {
-        if(view.getX() > pacman.getPosX()-pacman.getMrPac().getRadiusX() && view.getX() < pacman.getPosX() + pacman.getMrPac().getRadiusX()) 
+        if(view.getX() > pacman.getPosX()-pacman.getMrPac().getRadiusX() && view.getX() < pacman.getPosX() + pacman.getMrPac().getRadiusX()) {
             if(view.getY() > pacman.getPosY() - pacman.getMrPac().getRadiusY() && view.getY() < pacman.getPosY() + pacman.getMrPac().getRadiusY())
                 return true; 
+        }
         
         return false; 
     }
