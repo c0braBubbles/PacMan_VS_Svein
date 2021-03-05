@@ -207,6 +207,8 @@ public class Ghost {
                 stream = new FileInputStream(App.paths[4]); 
                 image = new Image(stream);
                 view.setImage(image);
+                if(isEaten(pacman))
+                    App.root.getChildren().remove(this.view);
                 changeBack(cir);
             }
         }
@@ -239,6 +241,15 @@ public class Ghost {
             }
         });
         new Thread(sleeper).start();
+    }
+    
+    
+    public boolean isEaten(MrPac pacman) {
+        if(view.getX() > pacman.getPosX()-pacman.getMrPac().getRadiusX() && view.getX() < pacman.getPosX() + pacman.getMrPac().getRadiusX()) 
+            if(view.getY() > pacman.getPosY() - pacman.getMrPac().getRadiusY() && view.getY() < pacman.getPosY() + pacman.getMrPac().getRadiusY())
+                return true; 
+        
+        return false; 
     }
     
 }
