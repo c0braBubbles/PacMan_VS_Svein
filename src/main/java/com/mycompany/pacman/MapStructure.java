@@ -8,6 +8,7 @@ package com.mycompany.pacman;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 /**
@@ -16,23 +17,37 @@ import java.util.Scanner;
  */
 public class MapStructure {
     public static final String NEW_LINE = "NL";
-    public static final String FILE_PATH = "default-map";
-    private String[] mapStructure;
+    public static final String DEFULT_FILE_PATH = "src/main/java/default-map";
+    private Object[] mapStructure;
     
     /**
      * default MapStructure
      */
     public MapStructure(){
-      mapStructure = readFile(FILE_PATH);  
+        mapStructure = readFile(DEFULT_FILE_PATH);  
     }
     
-    public String[] getMap(){
+    public Object[] getMapData(){
         return mapStructure;
     }
     
     public void genrateNewMap(){
-        throw new NoSuchMethodError("Not suported jet");
+        for(Object o:getMapData()){
+            for(int i=0; i<((String[])o).length; i++){
+                var rad = (String[])o;
+                width =0;
+                switch(rad[i]){
+                    case "K": width=width+1;
+                    break;
+                    default:
+                    break;
+                }
+                
+            }
+        }
+        
     }
+    
     
     
     
@@ -41,22 +56,31 @@ public class MapStructure {
      * @param path er filepath til kartfile
      * @return string[] som innerholder data struktur
      */
-    protected final String[] readFile(String path){
-        ArrayList<String> al = new ArrayList<>();
+    protected final Object[] readFile(String path){
+        ArrayList<String[]> al = new ArrayList<>();
         try {
-            File file = new File("default-map");
+            File file = new File(path);
             Scanner scanner = new Scanner(file);
             while(scanner.hasNext()) {
-                if(scanner.hasNext(",")){
-                    scanner.next();
-                }
-                // legger til new line i datastrukturen
+                
                 if(scanner.hasNextLine()){
-                    al.add(NEW_LINE);
+                    al.add(scanner.nextLine().split(","));
                 }
-                al.add(scanner.next());
+                
             }
-        }catch(FileNotFoundException e){}
-        return (String[])al.toArray();
+            
+        }catch(FileNotFoundException e){
+            System.out.println("File not found");
+        }
+        return al.toArray();
+    }
+    
+    @Override
+    public String toString(){
+       String s = "";
+       for(Object o: getMapData()){
+          s += Arrays.toString(((String[])o));
+       }
+       return s;
     }
 }
