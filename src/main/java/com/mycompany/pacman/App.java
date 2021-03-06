@@ -53,7 +53,7 @@ public class App extends Application {
      */
     public static Circle bigCir, bigCir2;
     
-    public static final int SIZE_X = 800, SIZE_Y = 300;
+    public static final int SIZE_X = 800, SIZE_Y = 800;
     public static BorderPane root;
     public static MapPane mp;
     

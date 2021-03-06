@@ -15,12 +15,7 @@ import javafx.scene.shape.Rectangle;
  *
  */
 public class MapPane extends Pane {
-    public static final double SCALE_MAP = 
-        Math.sqrt(
-            Math.pow(App.SIZE_X, 2) 
-            + Math.pow(App.SIZE_Y, 2)
-        )/2;
-    double scale = 20;
+    public final int SCALE_MAP = 0;
     private Color backgroundColor;
     private Color mainColor;
     private Map map;
@@ -39,22 +34,14 @@ public class MapPane extends Pane {
     
     
     public void drawMap() {
-        double x = 0;
-        double y = 0;
         for(int i=0;i<map.getMapData().length;i++){
-            System.out.println(y);
-            y++;
-            y=y+scale;
-            x=0;
             for(int j=0;j<map.getMapData()[i].length; j++){
-                x++;
-                x=x+scale;
                 switch(map.getMapData()[i][j]){
-                    case "K": drawEdge(x,y); // kant
+                    case "K": drawPacMap(j,i); // kant
                         break;
-                    /*case "0": // hindring inne i kartet
+                    case "0": drawPacMap(j,i); // hindring inne i kartet
                         break;
-                    case "A": // mat for pacman
+                    case "A": //drawFood(j,i);// mat for pacman
                         break;
                     case "C": // "chase ability" for pacman
                         break;
@@ -68,16 +55,33 @@ public class MapPane extends Pane {
                         break;
                     case "B": // spøkelse bur
                     default:
-                    */
                 }
             }
         }
     }
     
-    private void drawEdge(double x, double y) {
-        var rect = new Rectangle(x,y,10,10);
+    // tegner pacmap
+    private void drawPacMap(double dx, double dy) {
+        
+        double scaleY = App.SIZE_Y/map.getMapData().length;
+        double scaleX = App.SIZE_X/map.getMapData()[(int)dx].length;  
+        
+        if(dx!=0){
+            
+            dx=dx*scaleX;
+        }
+        
+        if(dy!=0){
+            dy=dy*scaleY;
+        }
+        
+        double x = dx;
+        double y = dy;
+        
+        var rect = new Rectangle(x,y,10+scaleX,10+scaleY);
         Paint color = mainColor;
         rect.setFill(color);
+        
         this.getChildren().add(rect);
         App.rectangles.add(rect);
         System.out.println("x: "+rect.getX()+" y: "+rect.getY());
@@ -121,6 +125,10 @@ public class MapPane extends Pane {
         mp.getChildren().add(bigCir); 
         circles.add(bigCir);
         */
+
+    private void drawFood(double dx, double dy) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
     
 }
