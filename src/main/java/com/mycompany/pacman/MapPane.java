@@ -16,28 +16,34 @@ import javafx.scene.shape.Rectangle;
  *
  */
 public class MapPane extends Pane {
-    public final int SCALE_MAP = 0;
-    private final Color backgroundColor;
-    private final Color mainColor;
+    protected final Color BACKGROUNdD_COLOR;
+    protected final Color MAIN_COLOR;
     private final Map map;
     
     public MapPane() {
         map = new Map();
-        backgroundColor = Color.BLACK;
-        mainColor = Color.ALICEBLUE;
+        BACKGROUNdD_COLOR = Color.BLACK;
+        MAIN_COLOR = Color.ALICEBLUE;
     }
     
     public MapPane(Color backgroundColor, Color mainColor) {
         map = new Map();
-        this.backgroundColor = backgroundColor;
-        this.mainColor = mainColor;
+        this.BACKGROUNdD_COLOR = backgroundColor;
+        this.MAIN_COLOR = mainColor;
     }
     
+    public Map getMap(){
+        return map;
+    }
+    
+    public String[] getSpawnLine(int line) {
+        return map.getSpawnLine(line);
+    
+    }
     
     public void drawMap() {
-        App.root.setStyle(
-            "-fx-background-color: "
-            +backgroundColor.toString().replace("0x", "#")
+        App.root.setStyle("-fx-background-color: "
+            +BACKGROUNdD_COLOR.toString().replace("0x", "#")
         );
         for(int i=0;i<map.getMapData().length;i++){
             for(int j=0;j<map.getMapData()[i].length; j++){
@@ -66,12 +72,13 @@ public class MapPane extends Pane {
     }
     
     // tegner pacmap
+    //@Todo fixe så methoden fungerer med scale methodene
     private void drawPacMap(double dx, double dy) {
         
         double scaleY = App.SIZE_Y/map.getMapData().length;
         double scaleX = App.SIZE_X/map.getMapData()[(int)dx].length;  
         
-        if(dx!=0){
+         if(dx!=0){
             
             dx=dx*scaleX;
         }
@@ -84,7 +91,7 @@ public class MapPane extends Pane {
         double y = dy;
         
         var rect = new Rectangle(x,y,scaleX,scaleY);
-        Paint color = mainColor;
+        Paint color = MAIN_COLOR;
         rect.setFill(color);
         
         this.getChildren().add(rect);
@@ -93,66 +100,23 @@ public class MapPane extends Pane {
         
     }
     
-    /*
-        this.getChildren().add();
-        rectangles.add(rect);
- 
-        rect2 = new Rectangle(300, 50, 50, 100);
-        rect2.setFill(Color.RED);
-        mp.getChildren().add(rect2);
-        rectangles.add(rect2);
-        
-        rect3 = new Rectangle(600, 100, 100, 50); 
-        rect3.setFill(Color.GREEN);
-        mp.getChildren().add(rect3); 
-        rectangles.add(rect3);
-        
-        
-        /* Teste sirkler *//*
-        cir = new Circle(200, 250, 10); 
-        cir.setFill(Color.GRAY);
-        mp.getChildren().add(cir); 
-        circles.add(cir); 
-        
-        cir2 = new Circle(250, 250, 10); 
-        cir2.setFill(Color.GRAY);
-        mp.getChildren().add(cir2); 
-        circles.add(cir2); 
-        
-        cir3 = new Circle(300, 250, 10); 
-        cir3.setFill(Color.GRAY);
-        mp.getChildren().add(cir3); 
-        circles.add(cir3); 
-        
-        /* Teste med store sirkler *//*
-        bigCir = new Circle(350, 250, 20); 
-        bigCir.setFill(Color.GRAY);
-        mp.getChildren().add(bigCir); 
-        circles.add(bigCir);
-        */
 
-    private void drawFood(double dx, double dy, boolean notNormalFood) {
+    private void drawFood(double x, double y, boolean notNormalFood) {
         
         double scaleY = App.SIZE_Y/map.getMapData().length;
-        double scaleX = App.SIZE_X/map.getMapData()[(int)dx].length;  
+        double scaleX = App.SIZE_X/map.getMapData()[(int)x].length;  
         
-        if(dx!=0){
-            
-            dx=dx*scaleX;
-        }
+        double dx = scaleX(x, scaleX);
         
-        if(dy!=0){
-            dy=dy*scaleY;
-        }
-        
-        double x = dx;
-        double y = dy;
+        double dy = scaleX(y, scaleY);
         
         var circle = 
             (notNormalFood)
-                ?new Circle(x+(scaleX/2),y+(scaleY/2),7)
-                :new Circle(x+(scaleX/2),y+(scaleY/2),4)
+                ?new Circle(dx+(scaleX/2),dy+(scaleY/2),7)
+                :new Circle(dx+(scaleX/2),dy+(scaleY/2),4)
             ;
+        
+        System.out.println("x food: "+circle.getCenterX()+" y food: "+circle.getCenterY());
         
         this.getChildren().add(circle);
         if(notNormalFood){
@@ -165,7 +129,23 @@ public class MapPane extends Pane {
             App.circles.add(circle);
         }
     }
-
+    
+    public static double scaleX(double x, double scale) {
+        double dx = 0;
+        if(x!=0){
+            dx=x*scale;
+        }
+        return dx;
+    }
+    
+    public static double scaleY(double y, double scale) {
+        double dy = 0;
+        if(y!=0){
+            dy=y*scale;
+        }
+        return dy;
+    }
+    
     private void ghostSpawn() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }

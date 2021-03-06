@@ -34,7 +34,7 @@ public class MrPac {
         da det kun finnes en størelse på pacman. Kan prøve å lage en getmetode 
         i konstruktøren
     */
- 
+    final String TYPE = "PAC";
  
     protected Arc pacman; 
     protected Ghost ghost; 
@@ -52,7 +52,6 @@ public class MrPac {
         setMrPac();
         setAnimation();
     }
- 
  
     private void setAnimation() {     
         /* Gaping */
@@ -164,12 +163,13 @@ public class MrPac {
      * @return returnerer true eller false
      */
     public boolean hitCircle(Circle cir) {
+        /*
         double pacPosX = pacman.getCenterX() + pacman.getRadiusX(); 
         double pacPosY = pacman.getCenterY() + pacman.getRadiusY(); 
         
         double cirPosX = cir.getCenterX() + cir.getRadius(); 
         double cirPosY = cir.getCenterY() + cir.getRadius(); 
-        
+        */
         if(pacman.getCenterX() > cir.getCenterX()-cir.getRadius() && pacman.getCenterX() < cir.getCenterX()+cir.getRadius()) {   
             if(pacman.getCenterY() > cir.getCenterY()-cir.getRadius() && pacman.getCenterY() < cir.getCenterY()+cir.getRadius()) {
                 return true; 
@@ -188,13 +188,12 @@ public class MrPac {
     public boolean canWalk(String code) {
         double pacX = pacman.getCenterX();
         double pacY = pacman.getCenterY();
+        double rectx1;
+        double rectx2;
  
-        double rectx1 = App.rect.getX();
-        double rectx2 = rectx1 + App.rect.getWidth();
- 
-        double recty1 = App.rect.getY();
-        double recty2 = recty1 + App.rect.getHeight();
- 
+        double recty1;
+        double recty2;
+        
         if(code.equals("LEFT")) {
             if(pacX - pacman.getRadiusX() > 0) {
                 for(Rectangle rect : App.rectangles) {
@@ -308,11 +307,32 @@ public class MrPac {
  
  
     private void setMrPac() {
-        pacman = new Arc(50, 100, 25, 25, 15, 300); 
+        double x = 0;
+        double y = App.mp.getMap().getMapData().length-2;
+        double spawn = 0;
+        for(String s: App.mp.getMap().getSpawnLine(App.mp.getMap().getMapData().length-1)) {
+            if(s == "A")
+                spawn++;
+        }
+        //@Todo fix randome spawn på nederste så den fungerer
+        x = (int)(Math.random()*(5-0+1)+0);
+        drawPac(x,y);
+    }
+    
+    private void drawPac(double x, double y) {
+        double scaleY = App.SIZE_Y/App.mp.getMap().getMapData().length;
+        double scaleX = App.SIZE_X/App.mp.getMap().getMapData()[(int)x].length;
+        
+        double dx = MapPane.scaleX(x, scaleX);
+        
+        double dy = MapPane.scaleX(y, scaleY);
+        
+        pacman = new Arc(dx, dy, scaleY/2, scaleY/2, 15, 300); 
         pacman.setStroke(Color.BLACK);
         pacman.setFill(Color.YELLOW);
         pacman.setType(ArcType.ROUND);
     }
+    
  
     protected Arc getMrPac() {
         return pacman; 
