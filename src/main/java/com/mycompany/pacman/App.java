@@ -73,6 +73,7 @@ public class App extends Application {
         
         // MapPane oppsett
         mp = new MapPane();
+        mp.drawMap();
         
         
         /* Scene-oppsett */
@@ -84,7 +85,7 @@ public class App extends Application {
         MrPac pacman = new MrPac();
         pacman.setSpeed(3);
                 
-        
+        /*
         double xpos = SIZE_X/2, ypos = SIZE_Y/2; 
         Red red    = new Red(paths[0], xpos, ypos);
         red.setSpeed(1.0);
@@ -95,10 +96,10 @@ public class App extends Application {
         Ghost yellow = new Ghost(paths[3], xpos - 200, ypos);
         yellow.setSpeed(1.0);
         Ghost shit = new Ghost(paths[4], xpos + 200, ypos);
-        
+        */
         
         root.setCenter(mp); 
-        mp.getChildren().addAll(pacman.getMrPac(), red.getImageView(), blue.getImageView(), green.getImageView(), yellow.getImageView(), shit.getImageView()); 
+        mp.getChildren().addAll(pacman.getMrPac()/*, red.getImageView(), blue.getImageView(), green.getImageView(), yellow.getImageView(), shit.getImageView()*/); 
         
         
         /* Teste kræsj med rektangler *//*
@@ -149,17 +150,16 @@ public class App extends Application {
         
         stage.show();
         pacman.startAnimation();
-        red.chase(pacman);
+        pacman.setMovement();
+        /*red.chase(pacman);
         blue.chase(pacman);
         green.chase(pacman);
-        yellow.chase(pacman);
+        yellow.chase(pacman);*/
     }
     
 
     public static void main(String[] args) {
-        MapStructure ms = new MapStructure();
-        System.out.println(ms.toString());
-        //launch();
+        launch();
         
     }
 

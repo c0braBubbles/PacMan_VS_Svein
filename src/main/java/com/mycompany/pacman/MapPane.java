@@ -5,6 +5,7 @@ package com.mycompany.pacman;
 
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 
@@ -14,31 +15,44 @@ import javafx.scene.shape.Rectangle;
  *
  */
 public class MapPane extends Pane {
+    public static final double SCALE_MAP = 
+        Math.sqrt(
+            Math.pow(App.SIZE_X, 2) 
+            + Math.pow(App.SIZE_Y, 2)
+        )/2;
+    double scale = 20;
     private Color backgroundColor;
     private Color mainColor;
     private Map map;
     
     public MapPane() {
+        map = new Map();
         backgroundColor = Color.BLACK;
         mainColor = Color.ALICEBLUE;
     }
     
     public MapPane(Color backgroundColor, Color mainColor) {
+        map = new Map();
         this.backgroundColor = backgroundColor;
         this.mainColor = mainColor;
     }
     
+    
     public void drawMap() {
-        int x = 0;
-        int y = 0;
-        for(String[] sa: map.getMapData()){
-            int dy = y++;
-            for(int i=0;i<sa.length; i++){
-                int dx = i;
-                switch(sa[i]){
-                    case "K": drawEdge(dy,dx); // kant
+        double x = 0;
+        double y = 0;
+        for(int i=0;i<map.getMapData().length;i++){
+            System.out.println(y);
+            y++;
+            y=y+scale;
+            x=0;
+            for(int j=0;j<map.getMapData()[i].length; j++){
+                x++;
+                x=x+scale;
+                switch(map.getMapData()[i][j]){
+                    case "K": drawEdge(x,y); // kant
                         break;
-                    case "0": // hindring inne i kartet
+                    /*case "0": // hindring inne i kartet
                         break;
                     case "A": // mat for pacman
                         break;
@@ -54,15 +68,20 @@ public class MapPane extends Pane {
                         break;
                     case "B": // spøkelse bur
                     default:
+                    */
                 }
             }
         }
     }
     
-    private void drawEdge(int x, int y) {
+    private void drawEdge(double x, double y) {
         var rect = new Rectangle(x,y,10,10);
-        App.mp.getChildrenUnmodifiable().add(rect);
+        Paint color = mainColor;
+        rect.setFill(color);
+        this.getChildren().add(rect);
         App.rectangles.add(rect);
+        System.out.println("x: "+rect.getX()+" y: "+rect.getY());
+        
     }
     
     /*

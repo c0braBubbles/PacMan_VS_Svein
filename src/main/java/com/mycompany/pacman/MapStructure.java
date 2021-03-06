@@ -5,7 +5,11 @@
  */
 package com.mycompany.pacman;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Scanner;
 
 /**
  *
@@ -18,8 +22,7 @@ public class MapStructure {
     protected String[][] mapData;
     
     public MapStructure(){
-        dataObject = null;
-        mapData = null;
+        readFile(MAP_DATA_STRUCTURE_FILE);
     }
     
     /**
@@ -31,7 +34,33 @@ public class MapStructure {
         this.dataObject = dataObject;
     }
     
-    
+    /**
+     * 
+     * Leser datastruktur fra fil som string
+     * Datastrukturen blir returnert som Object[],
+     * der objektene er String[]
+     * 
+     * @param path er filepath til standard kartfile
+     *
+     */
+    protected final void readFile(String path){
+        ArrayList<String[]> al = new ArrayList<>();
+        try {
+            File file = new File(path);
+            Scanner scanner = new Scanner(file);
+            while(scanner.hasNext()) {
+                if(scanner.hasNextLine()){
+                    // lager liste av hvær linje i datastruktren fra fil
+                    al.add(scanner.nextLine().split(","));
+                }
+                
+            }
+            
+        }catch(FileNotFoundException e){
+            System.out.println("File not found");
+        }
+        dataObject = al.toArray();
+    }
     
     @Override
     public String toString(){
