@@ -19,37 +19,19 @@ public class MapStructure {
     protected static final String DEFULT_FILE_PATH = "src/main/java/";
     protected static final String MAP_DATA_STRUCTURE_FILE = DEFULT_FILE_PATH +"default-map";
     protected Object[] dataObject;
-    private String[][] mapData;
+    protected String[][] mapData;
+    
+    public MapStructure(){
+        readFile(MAP_DATA_STRUCTURE_FILE);
+    }
     
     /**
      * default MapStructure
+     * @param dataObject
      */
-    public MapStructure(){
-        setMapData(dataObject);
-    }
     
-    /**
-     * Legger String[] fra dataObject
-     * in i String[][] mapData
-     * 
-     * @param oa er Object[] med String[] som objekter
-     */
-    protected final void setMapData(Object[] oa){
-        readFile(MAP_DATA_STRUCTURE_FILE);
-        mapData = new String
-            [oa.length]
-            [((String[])oa[0]).length];
-        for(int i=0; i<oa.length; i++){
-            mapData[i] = (String[])oa[i];
-        }
-    }
-    
-    public String[][] getMapData(){
-        return mapData;
-    }
-    
-    public void genrateNewMap() throws NoSuchMethodException {
-      throw new NoSuchMethodException("No methode");
+    public MapStructure(Object[] dataObject){
+        this.dataObject = dataObject;
     }
     
     /**
@@ -61,7 +43,7 @@ public class MapStructure {
      * @param path er filepath til standard kartfile
      *
      */
-    public void readFile(String path){
+    protected final void readFile(String path){
         ArrayList<String[]> al = new ArrayList<>();
         try {
             File file = new File(path);

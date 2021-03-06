@@ -3,41 +3,43 @@
  */
 package com.mycompany.pacman;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Scanner;
+
 /**
  *
  * @author svein
  */
 public class Map extends MapStructure {
-    MapStructure ms;
     
     public Map(){
        super();
+       setMapData(dataObject);
     }
     
-    public void generateMap() {
-        for(String[] sa: ms.getMapData()){
-            for(int i=0;i<sa.length; i++){
-                switch(sa[i]){
-                    case "K": // kant
-                        break;
-                    case "0": // kant inne i kartet
-                        break;
-                    case "A": // mat for pacman
-                        break;
-                    case "C": // "chase ability" for pacman
-                        break;
-                    case "Y": // ingen mat
-                        break;
-                    case "X": // tomt
-                        break;
-                    case "S": // spøkelse spawn
-                        break;
-                    case "U": // dør spøkelse spawn 
-                        break;
-                    case "B": // spøkelse bur
-                    default:
-                }
-            }
+    /**
+     * Legger String[] fra dataObject super
+     * in i String[][] mapData super
+     * 
+     * @param oa er Object[] med String[] som objekter
+     */
+    protected final void setMapData(Object[] oa){
+        mapData = new String
+            [oa.length]
+            [((String[])oa[0]).length];
+        for(int i=0; i<oa.length; i++){
+            mapData[i] = (String[])oa[i];
         }
     }
+    
+    public String[][] getMapData(){
+        return mapData;
+    }
+    
+    public void genrateNewMap() throws NoSuchMethodException {
+      throw new NoSuchMethodException("No methode");
+    }
+    
 }
