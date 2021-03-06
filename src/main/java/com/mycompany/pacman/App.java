@@ -51,6 +51,7 @@ public class App extends Application {
      * som får spøkelsene til å flykte 
      */
     public static Circle bigCir, bigCir2;
+    public static ArrayList<Circle> bigCircles = new ArrayList<Circle>();
     
     public static final int SIZE_X = 800, SIZE_Y = 800;
     public static BorderPane root;
@@ -68,7 +69,7 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws FileNotFoundException {
         root = new BorderPane();
-        root.setStyle("-fx-background-color: black;");
+        //root.setStyle("-fx-background-color: 000000ff;");
         
         // MapPane oppsett
         mp = new MapPane();
