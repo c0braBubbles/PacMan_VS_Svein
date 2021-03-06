@@ -43,7 +43,11 @@ public class MrPac {
     protected RotateTransition clockwise;
     protected Double speed;
  
- 
+    
+    /**
+     * Tar inn ingen parametre. Kaller bare på set-metoder 
+     * Det er oppsettet til å lage et pacman objekt
+     */
     public MrPac() {
         setMrPac();
         setAnimation();
@@ -86,9 +90,12 @@ public class MrPac {
     protected void setSpeed(double speed) {
         this.speed = speed;
     }
- 
- 
-    /* Flytte med piltasting */
+  
+
+    /**
+     * Får pacman til å bevege seg
+     * Bruker keycodes 
+     */
     protected void setMovement() {
         ArrayList<String> input = new ArrayList<String>();
  
@@ -150,6 +157,12 @@ public class MrPac {
     }
     
     
+    /**
+     * Sjekker om pacman treffer sirkler
+     * 
+     * @param cir henter sirkler fra panelet 
+     * @return returnerer true eller false
+     */
     public boolean hitCircle(Circle cir) {
         double pacPosX = pacman.getCenterX() + pacman.getRadiusX(); 
         double pacPosY = pacman.getCenterY() + pacman.getRadiusY(); 
@@ -166,7 +179,12 @@ public class MrPac {
         return false; 
     }
     
- 
+    /**
+     * sjekker om pacman kan gå eller om det er en vegg foran
+     *
+     * @param code tar inn keycode
+     * @return returnerer true eller false
+     */
     public boolean canWalk(String code) {
         double pacX = pacman.getCenterX();
         double pacY = pacman.getCenterY();

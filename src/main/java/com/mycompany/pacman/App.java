@@ -36,7 +36,6 @@ public class App extends Application {
     public static Rectangle rect;
     public static Rectangle rect2;
     public static Rectangle rect3;
-    public static Rectangle rect4;
     public static ArrayList<Rectangle> rectangles = new ArrayList<Rectangle>();
     
     /**
@@ -110,11 +109,6 @@ public class App extends Application {
         rect3.setFill(Color.GREEN);
         root.getChildren().add(rect3); 
         rectangles.add(rect3);
-        
-        rect4 = new Rectangle(200, 100, 60, 80);
-        rect4.setFill(Color.GREY);
-        root.getChildren().add(rect4); 
-        rectangles.add(rect4);
         
         
         /* Teste sirkler */

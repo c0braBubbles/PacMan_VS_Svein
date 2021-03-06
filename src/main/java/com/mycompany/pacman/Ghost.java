@@ -35,16 +35,6 @@ import javafx.util.Duration;
  */
 public class Ghost {
     
-    /*
-        Dette er superklassen til spøkelsene 
-        Hvert enkelt spørelse (rød, rosa, cyan og oransje) får sin 
-        egen subklasse av denne. Men hvilke felles egenskaper har disse: 
-        * path, filestream, image, imageView, 
-        * størelse
-        
-        Vi har nå rød, oransje/gul, grønn og blå. ALLE ER PÅ PLASS
-    */
-    
     protected String path; 
     protected double xpos, ypos; 
     protected double speed; 
@@ -53,7 +43,17 @@ public class Ghost {
     protected ImageView view;
     protected final int SIZE = 50; // alle blir like store 
 
-    
+    /**
+     * Dette er konstruktør til spøkelse objekt
+     * får inn nødvendige variabler til å legge til bilde 
+     * og plassen til spøkelsene
+     * legger path inn i en stream
+     * 
+     * @param path filsti til bilde (png)
+     * @param xpos start posisjon x-kordinat
+     * @param ypos start posisjon y-kordinat
+     * @throws FileNotFoundException 
+     */
     public Ghost(String path, double xpos, double ypos) throws FileNotFoundException {
         this.path   = path; 
         this.xpos   = xpos; 
@@ -70,6 +70,13 @@ public class Ghost {
     }
     
     
+    /**
+     * kalles på i konstruktøren for å sette bilde 
+     * inn i et view og posisjon
+     * 
+     * @param sizeX størelse x-lengde
+     * @param sizeY størelse y-lengde
+     */
     protected void setImageView(double sizeX, double sizeY) {
         view = new ImageView(getImage());
         view.setFitHeight(SIZE);
@@ -92,6 +99,14 @@ public class Ghost {
     }
     
     
+    /**
+     * kalles på i App.java for å sette igang "jakten"
+     * lokaliserer pacman sin posisjon og beregner avstanden
+     * og jobber rundt den informasjonen for å bevege seg
+     * kaller også på metode for å sjekke om pacman har spist en energitablett
+     *
+     * @param pacman tar inn pacman objekt for å hente variabler
+     */
     protected void chase(MrPac pacman) {
         pacman.setMovement();
 
@@ -107,16 +122,16 @@ public class Ghost {
                 double distanceY = Math.abs(pacPosY - view.getY());
 
                 if(distanceX > distanceY) {
-                    /*if(ghostX > pacPosX) {
+                    if(ghostX > pacPosX) {
                         view.setX(ghostX - getSpeed());
                         try {
                             ohhShit(pacman);
                         } catch (FileNotFoundException ex) {
                             ex.printStackTrace();
                         }
-                    } */
-                    if(ghostX > pacPosX) {
-                        if(canWalk(pacman)) {
+                    } 
+                    /*if(ghostX > pacPosX) {
+                        if(canWalk()) {
                             view.setX(ghostX - getSpeed());
                             try {
                                 ohhShit(pacman); 
@@ -124,7 +139,7 @@ public class Ghost {
                                 ex.printStackTrace();
                             }
                         }
-                    }
+                    }*/
                     else {
                         view.setX(ghostX + getSpeed());
                         try { 
@@ -142,7 +157,8 @@ public class Ghost {
                         } catch (FileNotFoundException ex) {
                             ex.printStackTrace();
                         }
-                    } 
+                    }
+                    
                     else {
                         view.setY(ghostY + getSpeed());
                         try {
@@ -157,45 +173,11 @@ public class Ghost {
     }
     
     
-    public boolean canWalk(MrPac pacman) {
-        double posX = view.getX(); 
-        double posY = view.getY();
-        
-        double pacPosX = pacman.getMrPac().getCenterX();
-        double pacPosY = pacman.getMrPac().getCenterY();
-        
-        double rectx1 = App.rect.getX(); 
-        double rectx2 = rectx1 + App.rect.getWidth();
-        
-        double recty1 = App.rect.getY(); 
-        double recty2 = App.rect.getX(); 
-        
-        double distanceX = Math.abs(pacman.getMrPac().getCenterX() - view.getX());
-        double distanceY = Math.abs(pacman.getMrPac().getCenterY() - view.getY());
-
+    public boolean canWalk() {
         for(Rectangle rect: App.rectangles) {
-        
-        if(posX > rect.getX()) {
-            if(posX - view.getFitWidth() > 0) {
-                    rectx1 = rect.getX(); 
-                    rectx2 = rectx1 + rect.getWidth(); 
-                    
-                    recty1 = rect.getY(); 
-                    recty2 = recty1 + rect.getHeight();
-                    
-                    if((posY > recty1 && posY < recty2)) {
-                        if(posX - view.getFitWidth() > rectx2)
-                            continue; 
-                        else if(posX - view.getFitWidth() < rectx1)
-                            continue; 
-                    }
-                    else 
-                        continue; 
-                    return false;                 
-            }
-            return false;
-        }
-     
+            if(view.getX() > rect.getX() - rect.getWidth() && view.getX() < rect.getX() + rect.getWidth())
+                if(view.getY() > rect.getY() - rect.getHeight() && view.getY() < rect.getY() + rect.getHeight())
+                    return true;
         }
         
         return false; 
@@ -203,8 +185,13 @@ public class Ghost {
     
     
     /**
-     * metode for når pacman spiser energitabletter
-     * får spøkelsene til å bli "skremt"
+     * sjekker om pacman har truffet en energitablett
+     * bytter så bilde på spøkelset i noen sekunder
+     * sletter objektet fra panelet om det blir spist
+     * endrer tilbake om det ikke er spist
+     * 
+     * @param pacman for å få se om pacman har truffet sirkel
+     * @throws FileNotFoundException nødvendig for å legge inn bilde i view
      */
     public void ohhShit(MrPac pacman) throws FileNotFoundException {
         for(Circle cir: App.circles) {
@@ -219,7 +206,12 @@ public class Ghost {
         }
     }
     
-    
+    /**
+     * endrer bilde tilbake til normal etter energitabletten er gått ut
+     * bruker sleeper som timer for tiden den skal være et annet bilde
+     * 
+     * @param cir sirklene som er energitabletter
+     */
     public void changeBack(Circle cir) {
         Task<Void> sleeper = new Task<Void>() {
             @Override
@@ -249,6 +241,12 @@ public class Ghost {
     }
     
     
+    /**
+     * sjekker om pacman har spist et spøkelse
+     *
+     * @param pacman finner pacman sin posisjon
+     * @return true eller false om posisjonene er like
+     */
     public boolean isEaten(MrPac pacman) {
         if(view.getX() > pacman.getPosX()-pacman.getMrPac().getRadiusX() && view.getX() < pacman.getPosX() + pacman.getMrPac().getRadiusX()) {
             if(view.getY() > pacman.getPosY() - pacman.getMrPac().getRadiusY() && view.getY() < pacman.getPosY() + pacman.getMrPac().getRadiusY())
