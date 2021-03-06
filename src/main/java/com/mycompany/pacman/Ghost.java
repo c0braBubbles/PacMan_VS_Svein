@@ -121,10 +121,13 @@ public class Ghost {
                 double distanceX = Math.abs(pacPosX - view.getX());
                 double distanceY = Math.abs(pacPosY - view.getY());
 
+
                 if(distanceX > distanceY) {
                     if(ghostX > pacPosX) {
+                        if(canWalk()) {
                         view.setX(ghostX - getSpeed());
-                        try {
+                        }
+                        try {   
                             ohhShit(pacman);
                         } catch (FileNotFoundException ex) {
                             ex.printStackTrace();
@@ -141,7 +144,9 @@ public class Ghost {
                         }
                     }*/
                     else {
+                        if(canWalk()) {
                         view.setX(ghostX + getSpeed());
+                        }
                         try { 
                             ohhShit(pacman);
                         } catch (FileNotFoundException ex) {
@@ -149,9 +154,11 @@ public class Ghost {
                         }
                     }
                 } 
-                else {
+                else if(distanceX < distanceY) {
                     if(ghostY > pacPosY) {
+                        if(canWalk()) {
                         view.setY(ghostY - getSpeed());
+                        }
                         try {
                             ohhShit(pacman);
                         } catch (FileNotFoundException ex) {
@@ -160,7 +167,9 @@ public class Ghost {
                     }
                     
                     else {
+                        if(canWalk()) {
                         view.setY(ghostY + getSpeed());
+                        }
                         try {
                             ohhShit(pacman);
                         } catch (FileNotFoundException ex) {
@@ -175,12 +184,12 @@ public class Ghost {
     
     public boolean canWalk() {
         for(Rectangle rect: App.rectangles) {
-            if(view.getX() > rect.getX() - rect.getWidth() && view.getX() < rect.getX() + rect.getWidth())
-                if(view.getY() > rect.getY() - rect.getHeight() && view.getY() < rect.getY() + rect.getHeight())
-                    return true;
+            if(view.getX() < rect.getX() || view.getX() > rect.getX() + rect.getWidth())
+                if(view.getY() < rect.getY() || view.getY() > rect.getY() + rect.getHeight())
+                    return false; 
         }
         
-        return false; 
+        return true; 
     }
     
     

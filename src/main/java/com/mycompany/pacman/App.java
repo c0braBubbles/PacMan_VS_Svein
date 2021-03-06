@@ -100,10 +100,10 @@ public class App extends Application {
         root.getChildren().add(rect);
         rectangles.add(rect);
  
-        rect2 = new Rectangle(300, 50, 50, 100);
+        /*rect2 = new Rectangle(300, 50, 50, 100);
         rect2.setFill(Color.RED);
         root.getChildren().add(rect2);
-        rectangles.add(rect2);
+        rectangles.add(rect2);*/
         
         rect3 = new Rectangle(600, 100, 100, 50); 
         rect3.setFill(Color.GREEN);
