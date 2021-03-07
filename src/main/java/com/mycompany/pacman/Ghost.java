@@ -124,7 +124,7 @@ public class Ghost {
 
                 if(distanceX > distanceY) {
                     if(ghostX > pacPosX) {
-                        if(canWalk()) {
+                        if(canWalk(pacman)) {
                         view.setX(ghostX - getSpeed());
                         }
                         try {   
@@ -144,7 +144,7 @@ public class Ghost {
                         }
                     }*/
                     else {
-                        if(canWalk()) {
+                        if(canWalk(pacman)) {
                         view.setX(ghostX + getSpeed());
                         }
                         try { 
@@ -156,7 +156,7 @@ public class Ghost {
                 } 
                 else if(distanceX < distanceY) {
                     if(ghostY > pacPosY) {
-                        if(canWalk()) {
+                        if(canWalk(pacman)) {
                         view.setY(ghostY - getSpeed());
                         }
                         try {
@@ -167,7 +167,7 @@ public class Ghost {
                     }
                     
                     else {
-                        if(canWalk()) {
+                        if(canWalk(pacman)) {
                         view.setY(ghostY + getSpeed());
                         }
                         try {
@@ -182,14 +182,121 @@ public class Ghost {
     }
     
     
-    public boolean canWalk() {
-        for(Rectangle rect: App.rectangles) {
-            if(view.getX() < rect.getX() || view.getX() > rect.getX() + rect.getWidth())
-                if(view.getY() < rect.getY() || view.getY() > rect.getY() + rect.getHeight())
+    public boolean canWalk(MrPac pacman) {
+        double pacx = pacman.getMrPac().getCenterX(); 
+        double pacy = pacman.getMrPac().getCenterY(); 
+        
+        double distanceX = Math.abs(pacx - view.getX());
+        double distanceY = Math.abs(pacy - view.getY());
+        
+        double rectx1 = App.rect.getX();
+        double rectx2 = rectx1 + App.rect.getWidth();
+        
+        double recty1 = App.rect.getY();
+        double recty2 = recty1 + App.rect.getHeight(); 
+        
+        double ghostx = view.getX();
+        double ghosty = view.getY();
+        
+        if(distanceX > distanceY) {
+        
+            if(ghostx > pacx) {
+            if(ghostx - view.getFitWidth() > 0) {
+                for(Rectangle rect: App.rectangles) {
+                    rectx1 = rect.getX();
+                    rectx2 = rectx1 - rect.getWidth(); 
+                    
+                    recty1 = rect.getY();
+                    recty2 = recty1 - rect.getHeight(); 
+                    
+                    if((ghosty > recty1 && ghosty < recty2)) {
+                        if(ghostx - view.getFitWidth() > rectx2)
+                            continue; 
+                        else if(ghostx - view.getFitWidth() < rectx1)
+                            continue; 
+                    }
+                    else 
+                        continue; 
                     return false; 
+                }
+                return true;
+            }
         }
         
-        return true; 
+        else if(ghostx < pacx) {
+            if(ghostx + view.getFitWidth() < App.SIZE_X) {
+                for(Rectangle rect: App.rectangles) {
+                    rectx1 = rect.getX(); 
+                    rectx2 = rectx1 + rect.getWidth(); 
+                    
+                    recty1 = rect.getY(); 
+                    recty2 = recty1 + rect.getHeight(); 
+                    
+                    if(ghostx > recty1 && ghostx < recty2) {
+                        if(ghostx + view.getFitWidth() < rectx1) 
+                            continue; 
+                        else if(ghostx + view.getFitWidth() > rectx2)
+                            continue; 
+                    }
+                    else 
+                        continue; 
+                    return false; 
+                }
+                return true; 
+            }
+        }
+    }
+        
+        else {
+        
+        if(ghosty > pacy) {
+            if(ghosty - view.getFitHeight() > 0) {
+                for(Rectangle rect: App.rectangles) {
+                    rectx1 = rect.getX(); 
+                    rectx1 = rectx1 + rect.getWidth(); 
+                    
+                    recty1 = rect.getY(); 
+                    recty2 = recty1 + rect.getHeight(); 
+                    
+                    if(ghostx > rectx1 && ghostx < rectx1) {
+                        if(ghosty - view.getFitHeight() < recty1)
+                            continue; 
+                        else if(ghosty - view.getFitHeight() > recty2)
+                            continue; 
+                    }
+                    else 
+                        continue; 
+                    return false; 
+                }
+                return true; 
+            }
+        }
+        
+        else if(ghosty < pacy) {
+            if(ghosty + view.getFitHeight() < App.SIZE_Y) {
+                for(Rectangle rect: App.rectangles) {
+                    rectx1 = rect.getX(); 
+                    rectx2 = rectx1 + rect.getWidth(); 
+                    
+                    recty1 = rect.getY(); 
+                    recty2 = recty1 + rect.getHeight(); 
+                    
+                    if(ghostx > rectx1 && ghostx < rectx2) {
+                        if(ghosty + view.getFitHeight() < recty1) 
+                            continue; 
+                        else if(ghosty + view.getFitHeight() > recty2)
+                            continue; 
+                    }
+                    else 
+                        continue; 
+                    return false; 
+                }
+                return true; 
+            }
+        }
+        }
+        
+        return false; 
     }
     
     
@@ -214,6 +321,7 @@ public class Ghost {
             }
         }
     }
+    
     
     /**
      * endrer bilde tilbake til normal etter energitabletten er gått ut
