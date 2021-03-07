@@ -83,23 +83,26 @@ public class App extends Application {
         
         
         MrPac pacman = new MrPac();
-        pacman.setSpeed(3);
+        pacman.setSpeed(2);
                 
-        /*
+        
         double xpos = SIZE_X/2, ypos = SIZE_Y/2; 
         Red red    = new Red(paths[0], xpos, ypos);
         red.setSpeed(1.0);
+        red.chase(pacman);
         Ghost blue   = new Ghost(paths[1], xpos + 100, ypos);
         blue.setSpeed(1.0);
+        blue.chase(pacman);
         Ghost green  = new Ghost(paths[2], xpos - 100, ypos);
         green.setSpeed(1.0);
+        green.chase(pacman);
         Ghost yellow = new Ghost(paths[3], xpos - 200, ypos);
         yellow.setSpeed(1.0);
-        Ghost shit = new Ghost(paths[4], xpos + 200, ypos);
-        */
+        green.chase(pacman);
+        //Ghost shit = new Ghost(paths[4], xpos + 200, ypos);
         
         root.setCenter(mp); 
-        mp.getChildren().addAll(pacman.getMrPac()/*, red.getImageView(), blue.getImageView(), green.getImageView(), yellow.getImageView(), shit.getImageView()*/); 
+        mp.getChildren().addAll(pacman.getMrPac(), red.getImageView(), blue.getImageView(), green.getImageView(), yellow.getImageView()); 
         
         
         /* Teste kræsj med rektangler *//*
