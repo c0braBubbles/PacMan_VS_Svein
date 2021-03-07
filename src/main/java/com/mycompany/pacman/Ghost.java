@@ -41,7 +41,7 @@ public class Ghost {
     protected Image image; 
     protected FileInputStream stream; 
     protected ImageView view;
-    protected final int SIZE = 40; // alle blir like store 
+    protected final int SIZE = 20; // alle blir like store 
 
     /**
      * Dette er konstruktør til spøkelse objekt
@@ -306,7 +306,7 @@ public class Ghost {
      */
     public void ohhShit(MrPac pacman) throws FileNotFoundException {
         for(Circle cir: App.circles) {
-            if(pacman.hitCircle(cir) && cir.getRadius() > 15) {
+            if(pacman.hitCircle(cir) && cir.getRadius() > 5) {
                 stream = new FileInputStream(App.paths[4]); 
                 image = new Image(stream);
                 view.setImage(image);

@@ -5,8 +5,13 @@ import java.util.ArrayList;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 
@@ -39,6 +44,7 @@ public class App extends Application {
     public static BorderPane root;
     public static MapPane mp;
     
+    public static Text gameOver;
     public static String[] paths = {
         "src/main/java/com/mycompany/pacman/red.png",
         "src/main/java/com/mycompany/pacman/blue.png", 
@@ -53,9 +59,18 @@ public class App extends Application {
         root = new BorderPane();
         //root.setStyle("-fx-background-color: 000000ff;");
         
+        
         // MapPane oppsett
         mp = new MapPane();
         mp.drawMap();
+        
+        
+        gameOver = new Text(); 
+        gameOver.setText("GAME OVER");
+        gameOver.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 20));
+        gameOver.setFill(Color.RED);
+        gameOver.setX(SIZE_X/2);
+        gameOver.setY(SIZE_Y/2);
         
         
         /* Scene-oppsett */
@@ -79,8 +94,9 @@ public class App extends Application {
         yellow.setSpeed(1.0);
 
         
-        root.setCenter(mp); 
+        //root.setCenter(mp); 
         mp.getChildren().addAll(pacman.getMrPac(), red.getImageView(), blue.getImageView(), green.getImageView(), yellow.getImageView()); 
+        root.setCenter(mp);
         
         
         /* Teste kræsj med rektangler *//*
