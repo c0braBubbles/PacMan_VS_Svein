@@ -101,7 +101,14 @@ public class App extends Application {
         //Ghost shit = new Ghost(paths[4], xpos + 200, ypos);
         
         root.setCenter(mp); 
-        mp.getChildren().addAll(pacman.getMrPac(), red.getImageView(), blue.getImageView(), green.getImageView(), yellow.getImageView()); 
+        mp.getChildren()
+            .addAll(
+                pacman.getMrPac(), 
+                red.getImageView(), 
+                blue.getImageView(), 
+                green.getImageView(), 
+                yellow.getImageView()
+            ); 
         
         
         /* Teste kræsj med rektangler *//*
