@@ -89,16 +89,13 @@ public class App extends Application {
         double xpos = SIZE_X/2, ypos = SIZE_Y/2; 
         Red red    = new Red(paths[0], xpos, ypos);
         red.setSpeed(1.0);
-        red.chase(pacman);
         Ghost blue   = new Ghost(paths[1], xpos + 100, ypos);
         blue.setSpeed(1.0);
-        blue.chase(pacman);
         Ghost green  = new Ghost(paths[2], xpos - 100, ypos);
         green.setSpeed(1.0);
-        green.chase(pacman);
         Ghost yellow = new Ghost(paths[3], xpos - 200, ypos);
         yellow.setSpeed(1.0);
-        green.chase(pacman);
+
         //Ghost shit = new Ghost(paths[4], xpos + 200, ypos);
         
         root.setCenter(mp); 
@@ -144,10 +141,10 @@ public class App extends Application {
         stage.show();
         pacman.startAnimation();
         pacman.setMovement();
-        /*red.chase(pacman);
+        red.chase(pacman);
         blue.chase(pacman);
         green.chase(pacman);
-        yellow.chase(pacman);*/
+        yellow.chase(pacman);
     }
     
 
