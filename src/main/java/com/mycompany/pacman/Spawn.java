@@ -25,7 +25,7 @@ public class Spawn {
     }
 
     public Spawn(Point2D spawnPoint) {
-       setSpawnPoint(spawnPoint);
+        setSpawnPoint(spawnPoint);
         setArraySpawn(new ArrayList<>());
         arraySpawn.add(spawnPoint);
     }
@@ -45,10 +45,13 @@ public class Spawn {
         this.arraySpawn = arraySpawn;
     }
 
-    public void setSpawnPoint(Point2D spawnPoint) {
+    public final void setSpawnPoint(Point2D spawnPoint) {
         this.spawnPoint = spawnPoint;
     }
     
+    public void setSpawnPoint(double x,double y){
+        setSpawnPoint(new Point2D(x,y));
+    }
     
     
 }
