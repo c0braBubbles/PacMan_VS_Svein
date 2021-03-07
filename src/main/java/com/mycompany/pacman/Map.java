@@ -12,32 +12,6 @@ import java.util.HashMap;
  */
 public class Map extends MapStructure {
     
-    /**
-     * Bruker Figur enum for sette lovlige spawn verdier
-     * see link under for kilde til hvordan det ble laget
-     * @see https://www.baeldung.com/java-enum-values
-     * 
-     *//*
-    public enum Figure {
-        PAC("A"),
-        GHOST("S");
-        
-        private static final HashMap<String, Figure> FIG_MAP = new HashMap<>();
-    
-        static {
-            for (Figure fig: values()) {
-                FIG_MAP.put(fig.legal, fig);
-            }
-        }
-        
-        public final String legal;
-        
-        private Figure(String legal) {
-            this.legal = legal;
-        }
-        
-    }
-    */
     public Map(){
        super();
        setMapData(dataObject);

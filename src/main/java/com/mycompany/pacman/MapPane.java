@@ -3,7 +3,7 @@
  */
 package com.mycompany.pacman;
 
-import javafx.scene.layout.BackgroundFill;
+import java.io.FileNotFoundException;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
@@ -79,7 +79,7 @@ public class MapPane extends Pane {
                         break;
                     case "X": // tomt
                         break;
-                    case "S": //ghostSpawn();// spøkelse spawn
+                    case "S": ghostSpawn(j,i);// spøkelse spawn
                         break;
                     case "U": //noAccsessPacMan(j,i); // dør spøkelse spawn 
                         break;
@@ -94,8 +94,8 @@ public class MapPane extends Pane {
     //@Todo fixe så methoden fungerer med scale methodene
     private void drawPacMap(double dx, double dy) {
         
-        double scaleY = App.SIZE_Y/map.getMapData().length;
-        double scaleX = App.SIZE_X/map.getMapData()[(int)dx].length;  
+        double scaleY = App.SIZE_Y_GRID/map.getMapData().length;
+        double scaleX = App.SIZE_X_GRID/map.getMapData()[(int)dx].length;  
         
          if(dx!=0){
             
@@ -152,12 +152,12 @@ public class MapPane extends Pane {
     
     private void drawFood(double x, double y, boolean notNormalFood) {
         
-        double scaleY = App.SIZE_Y/map.getMapData().length;
-        double scaleX = App.SIZE_X/map.getMapData()[(int)x].length;  
+        double scaleY = App.SIZE_Y_GRID/map.getMapData().length;
+        double scaleX = App.SIZE_X_GRID/map.getMapData()[(int)x].length;  
         
         double dx = scaleX(x, scaleX);
         
-        double dy = scaleX(y, scaleY);
+        double dy = scaleY(y, scaleY);
         
         var circle = 
             (notNormalFood)
@@ -165,9 +165,10 @@ public class MapPane extends Pane {
                 :new Circle(dx+(scaleX/2),dy+(scaleY/2),4)
             ;
         
-        System.out.println("x food: "+circle.getCenterX()+" y food: "+circle.getCenterY());
+        System.out.println("x food: "+dx+" y food: "+dy);
         
         this.getChildren().add(circle);
+        
         if(notNormalFood){
             Paint color = Color.DARKMAGENTA;
             circle.setFill(color);
@@ -179,11 +180,24 @@ public class MapPane extends Pane {
         }
     }
     
-    private void ghostSpawn() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    private void ghostSpawn(int x, double y){
+        try {
+            double scaleY = App.SIZE_Y_GRID/map.getMapData().length;
+            double scaleX = App.SIZE_X_GRID/map.getMapData()[(int)x].length;
+
+            double xpos = scaleX(x,scaleX), ypos = scaleX(y,scaleY);
+            Ghost blue   = new Ghost(App.paths[1], xpos + 100, ypos);
+            blue.setSpeed(1.0);
+            Ghost green  = new Ghost(App.paths[2], xpos - 100, ypos);
+            green.setSpeed(1.0);
+            Ghost yellow = new Ghost(App.paths[3], xpos - 200, ypos);
+            yellow.setSpeed(1.0); 
+        }catch(FileNotFoundException fNfE){
+            System.out.println("No Ghost coming to you, message for you:\n"+ fNfE.getMessage());
+        }
     }
 
-    private void drawGostSpawn(int j, int i) {
+    private void drawGostSpawn() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

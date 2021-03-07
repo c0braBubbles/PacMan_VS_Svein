@@ -6,9 +6,7 @@
 package com.mycompany.pacman;
 
 import javafx.animation.*;
-import javafx.event.EventHandler;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Arc;
 import javafx.scene.shape.ArcType;
@@ -105,6 +103,7 @@ public class MrPac {
         });
  
         new AnimationTimer() {
+            @Override
             public void handle(long currentNanoTime) {
                 double pacX = pacman.getCenterX();
                 double pacY = pacman.getCenterY();
@@ -116,7 +115,7 @@ public class MrPac {
                             pacman.setRotate(-180);
                         }
                         if(hitCircle(cir)) {
-                            App.root.getChildren().remove(cir);
+                            App.mp.getChildren().remove(cir);
                         }
                     }
  
@@ -126,7 +125,7 @@ public class MrPac {
                             pacman.setRotate(0);
                         }
                         if(hitCircle(cir)) {
-                            App.root.getChildren().remove(cir);
+                            App.mp.getChildren().remove(cir);
                         }
                     }
  
@@ -136,7 +135,7 @@ public class MrPac {
                             pacman.setRotate(-90);
                         }
                         if(hitCircle(cir)) {             
-                            App.root.getChildren().remove(cir); 
+                            App.mp.getChildren().remove(cir); 
                         }
                     }
  
@@ -146,7 +145,7 @@ public class MrPac {
                             pacman.setRotate(90);
                         }
                         if(hitCircle(cir)) {
-                            App.root.getChildren().remove(cir);
+                            App.mp.getChildren().remove(cir);
                         }
                     }
                 }
@@ -309,25 +308,27 @@ public class MrPac {
     private void setMrPac() {
         double x = 0;
         double y = App.mp.getMap().getMapData().length-2;
-        double spawn = 0;
-        for(String s: App.mp.getMap().getSpawnLine(App.mp.getMap().getMapData().length-1)) {
-            if(s == "A")
+        //double spawn = 0;
+        /*
+        for(String s: App.mp.getMap().getSpawnLine(App.mp.getMap().getMapData().length-2)) {
+            if(s=="A")
                 spawn++;
         }
+        */
         //@Todo fix randome spawn på nederste så den fungerer
-        x = (int)(Math.random()*(5-0+1)+0);
+        x = 1;//(int)(Math.random()*(spawn-0+1)+0);
         drawPac(x,y);
     }
     
     private void drawPac(double x, double y) {
-        double scaleY = App.SIZE_Y/App.mp.getMap().getMapData().length;
-        double scaleX = App.SIZE_X/App.mp.getMap().getMapData()[(int)x].length;
+        double scaleY = App.SIZE_Y_GRID/App.mp.getMap().getMapData().length;
+        double scaleX = App.SIZE_X_GRID/App.mp.getMap().getMapData()[(int)x].length;
         
         double dx = MapPane.scaleX(x, scaleX);
         
         double dy = MapPane.scaleX(y, scaleY);
         
-        pacman = new Arc(dx, dy, scaleY/2, scaleY/2, 15, 300); 
+        pacman = new Arc(dx+(scaleX/2), dy+(scaleY/2), scaleY/2-1, scaleY/2-1, 15, 300); 
         pacman.setStroke(Color.BLACK);
         pacman.setFill(Color.YELLOW);
         pacman.setType(ArcType.ROUND);

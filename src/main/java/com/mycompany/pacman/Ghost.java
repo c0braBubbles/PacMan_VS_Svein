@@ -31,6 +31,28 @@ public class Ghost {
     protected ImageView view;
     protected final int SIZE = 50; // alle blir like store 
 
+    
+    /**
+     * Dette er konstruktør til spøkelse objekt
+     * får inn nødvendige variabler til å legge til bilde 
+     * og plassen til spøkelsene
+     * legger path inn i en stream
+     * 
+     * @param path filsti til bilde (png)
+     * @param xpos start posisjon x-kordinat
+     * @param ypos start posisjon y-kordinat
+     * @throws FileNotFoundException 
+     */
+    public Ghost(String path) throws FileNotFoundException {
+        this.path   = path; 
+        this.xpos   = getSpawn().getX(); 
+        this.ypos   = getSpawn().getY();
+        stream      = new FileInputStream(path); 
+        image       = new Image(stream); 
+        
+        setImageView(SIZE, SIZE);
+    }
+    
     /**
      * Dette er konstruktør til spøkelse objekt
      * får inn nødvendige variabler til å legge til bilde 
@@ -246,11 +268,22 @@ public class Ghost {
      */
     public boolean isEaten(MrPac pacman) {
         if(view.getX() > pacman.getPosX()-pacman.getMrPac().getRadiusX() && view.getX() < pacman.getPosX() + pacman.getMrPac().getRadiusX()) {
-            if(view.getY() > pacman.getPosY() - pacman.getMrPac().getRadiusY() && view.getY() < pacman.getPosY() + pacman.getMrPac().getRadiusY())
-                return true; 
+            if(view.getY() > pacman.getPosY() - pacman.getMrPac().getRadiusY() && view.getY() < pacman.getPosY() + pacman.getMrPac().getRadiusY()) {
+                //reSpawn(path, getSpawn().getX(), getSpawn().getY());
+                return true;
+            }
         }
         
         return false; 
     }
+
+    private Object getSpawn() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    private void reSpawn(String path, double xPos, double yPos) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
     
 }

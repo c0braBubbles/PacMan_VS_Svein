@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
@@ -27,7 +28,6 @@ public class App extends Application {
      * De små sirklene
      * som bare gir deg litt poeng
      */
-    public static Circle cir, cir2, cir3; 
     public static ArrayList<Circle> circles = new ArrayList<Circle>();
     
     /**
@@ -38,7 +38,9 @@ public class App extends Application {
     public static ArrayList<Circle> bigCircles = new ArrayList<Circle>();
     
     public static final int SIZE_X = 600, SIZE_Y = 600;
+    public static final int SIZE_X_GRID = 460, SIZE_Y_GRID = 560;
     public static BorderPane root;
+    public static Pane wrapperPane;
     public static MapPane mp;
     
     public static String[] paths = {
@@ -58,6 +60,8 @@ public class App extends Application {
         // MapPane oppsett
         mp = new MapPane();
         mp.drawMap();
+        mp.setPrefHeight(SIZE_Y_GRID);
+        mp.setPrefWidth(SIZE_Y_GRID);
         
         
         /* Scene-oppsett */
@@ -71,64 +75,18 @@ public class App extends Application {
                 
 
         
-        double xpos = SIZE_X/2, ypos = SIZE_Y/2; 
-        Red red    = new Red(paths[0], xpos, ypos);
-        red.setSpeed(1.0);
-        Ghost blue   = new Ghost(paths[1], xpos + 100, ypos);
-        blue.setSpeed(1.0);
-        Ghost green  = new Ghost(paths[2], xpos - 100, ypos);
-        green.setSpeed(1.0);
-        Ghost yellow = new Ghost(paths[3], xpos - 200, ypos);
-        yellow.setSpeed(1.0);
+        
 
 
         
-        root.setCenter(mp); 
-        mp.getChildren()
-            .addAll(
+        root.setCenter(mp);  
+            mp.getChildren().addAll(
                 pacman.getMrPac(), 
                 red.getImageView(), 
                 blue.getImageView(), 
                 green.getImageView(), 
                 yellow.getImageView()
             );
-        
-        
-        /* Teste kræsj med rektangler *//*
-        rect = new Rectangle(100, 100, 100, 100);
-        rect.setFill(Color.BLUE);
-        mp.getChildren().add(rect);
-        rectangles.add(rect);
- 
-
-        /*rect2 = new Rectangle(300, 50, 50, 100);
-        rect2.setFill(Color.RED);
-        root.getChildren().add(rect2);
-        rectangles.add(rect2);*/
-        
-        
-        /* Teste sirkler *//*
-        cir = new Circle(200, 250, 10); 
-        cir.setFill(Color.GRAY);
-        mp.getChildren().add(cir); 
-        circles.add(cir); 
-        
-        cir2 = new Circle(250, 250, 10); 
-        cir2.setFill(Color.GRAY);
-        mp.getChildren().add(cir2); 
-        circles.add(cir2); 
-        
-        cir3 = new Circle(300, 250, 10); 
-        cir3.setFill(Color.GRAY);
-        mp.getChildren().add(cir3); 
-        circles.add(cir3); 
-        
-        /* Teste med store sirkler *//*
-        bigCir = new Circle(350, 250, 20); 
-        bigCir.setFill(Color.GRAY);
-        mp.getChildren().add(bigCir); 
-        circles.add(bigCir);
-        */
         
         stage.show();
         pacman.startAnimation();
