@@ -12,6 +12,8 @@ import javafx.stage.Stage;
 
 /**
  * JavaFX App
+ * @author Mats
+ * @author Svein
  */
 public class App extends Application {
     /*
@@ -65,8 +67,10 @@ public class App extends Application {
         
         
         MrPac pacman = new MrPac();
-        pacman.setSpeed(3);
+        pacman.setSpeed(2);
                 
+
+        
         double xpos = SIZE_X/2, ypos = SIZE_Y/2; 
         Red red    = new Red(paths[0], xpos, ypos);
         red.setSpeed(1.0);
@@ -76,9 +80,18 @@ public class App extends Application {
         green.setSpeed(1.0);
         Ghost yellow = new Ghost(paths[3], xpos - 200, ypos);
         yellow.setSpeed(1.0);
+
+
         
         root.setCenter(mp); 
-        mp.getChildren().addAll(pacman.getMrPac(), red.getImageView(), blue.getImageView(), green.getImageView(), yellow.getImageView()); 
+        mp.getChildren()
+            .addAll(
+                pacman.getMrPac(), 
+                red.getImageView(), 
+                blue.getImageView(), 
+                green.getImageView(), 
+                yellow.getImageView()
+            );
         
         
         /* Teste kræsj med rektangler *//*
@@ -120,10 +133,10 @@ public class App extends Application {
         stage.show();
         pacman.startAnimation();
         pacman.setMovement();
-        /*red.chase(pacman);
+        red.chase(pacman);
         blue.chase(pacman);
         green.chase(pacman);
-        yellow.chase(pacman);*/
+        yellow.chase(pacman);
     }
     
 

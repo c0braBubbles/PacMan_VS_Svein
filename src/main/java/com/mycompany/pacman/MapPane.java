@@ -16,8 +16,8 @@ import javafx.scene.shape.Rectangle;
  *
  */
 public class MapPane extends Pane {
-    protected final Color BACKGROUNdD_COLOR;
-    protected final Color MAIN_COLOR;
+    private final Color BACKGROUNdD_COLOR;
+    private final Color MAIN_COLOR;
     private final Map map;
     
     public MapPane() {
@@ -26,21 +26,40 @@ public class MapPane extends Pane {
         MAIN_COLOR = Color.ALICEBLUE;
     }
     
+    /**
+     *
+     * @param backgroundColor
+     * @param mainColor
+     */
     public MapPane(Color backgroundColor, Color mainColor) {
         map = new Map();
         this.BACKGROUNdD_COLOR = backgroundColor;
         this.MAIN_COLOR = mainColor;
     }
     
+    /**
+     *
+     * @return
+     */
     public Map getMap(){
         return map;
+        
     }
     
+    /**
+     *
+     * @param line
+     * @return
+     */
     public String[] getSpawnLine(int line) {
         return map.getSpawnLine(line);
     
     }
     
+    
+    /**
+     *
+     */
     public void drawMap() {
         App.root.setStyle("-fx-background-color: "
             +BACKGROUNdD_COLOR.toString().replace("0x", "#")
@@ -101,6 +120,36 @@ public class MapPane extends Pane {
     }
     
 
+    
+    
+    /**
+     *
+     * @param x
+     * @param scale
+     * @return
+     */
+    public static double scaleX(double x, double scale) {
+        double dx = 0;
+        if(x!=0){
+            dx=x*scale;
+        }
+        return dx;
+    }
+    
+    /**
+     *
+     * @param y
+     * @param scale
+     * @return
+     */
+    public static double scaleY(double y, double scale) {
+        double dy = 0;
+        if(y!=0){
+            dy=y*scale;
+        }
+        return dy;
+    }
+    
     private void drawFood(double x, double y, boolean notNormalFood) {
         
         double scaleY = App.SIZE_Y/map.getMapData().length;
@@ -128,22 +177,6 @@ public class MapPane extends Pane {
             circle.setFill(color);
             App.circles.add(circle);
         }
-    }
-    
-    public static double scaleX(double x, double scale) {
-        double dx = 0;
-        if(x!=0){
-            dx=x*scale;
-        }
-        return dx;
-    }
-    
-    public static double scaleY(double y, double scale) {
-        double dy = 0;
-        if(y!=0){
-            dy=y*scale;
-        }
-        return dy;
     }
     
     private void ghostSpawn() {
