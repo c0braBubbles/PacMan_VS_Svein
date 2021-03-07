@@ -41,7 +41,7 @@ public class Ghost {
     protected Image image; 
     protected FileInputStream stream; 
     protected ImageView view;
-    protected final int SIZE = 50; // alle blir like store 
+    protected final int SIZE = 40; // alle blir like store 
 
     /**
      * Dette er konstruktør til spøkelse objekt
@@ -121,11 +121,10 @@ public class Ghost {
                 double distanceX = Math.abs(pacPosX - view.getX());
                 double distanceY = Math.abs(pacPosY - view.getY());
 
-
                 if(distanceX > distanceY) {
                     if(ghostX > pacPosX) {
                         if(canWalk(pacman)) {
-                        view.setX(ghostX - getSpeed());
+                            view.setX(ghostX - getSpeed());
                         }
                         try {   
                             ohhShit(pacman);
@@ -133,16 +132,6 @@ public class Ghost {
                             ex.printStackTrace();
                         }
                     } 
-                    /*if(ghostX > pacPosX) {
-                        if(canWalk()) {
-                            view.setX(ghostX - getSpeed());
-                            try {
-                                ohhShit(pacman); 
-                            } catch(FileNotFoundException ex) {
-                                ex.printStackTrace();
-                            }
-                        }
-                    }*/
                     else {
                         if(canWalk(pacman)) {
                         view.setX(ghostX + getSpeed());
@@ -165,7 +154,6 @@ public class Ghost {
                             ex.printStackTrace();
                         }
                     }
-                    
                     else {
                         if(canWalk(pacman)) {
                         view.setY(ghostY + getSpeed());
@@ -182,6 +170,13 @@ public class Ghost {
     }
     
     
+    /**
+     * Kontraiksjons-metode for å se om spøkelsene kan gå til venstre, høyre, 
+     * opp eller ned. Ser om det er en vegg i nærheten når den går en retning.
+     *
+     * @param pacman for å hente posisjon og lengde på arc-en
+     * @return returnerer alltid false hvis ikke tilfellene treffer inn
+     */
     public boolean canWalk(MrPac pacman) {
         double pacx = pacman.getMrPac().getCenterX(); 
         double pacy = pacman.getMrPac().getCenterY(); 
@@ -189,11 +184,11 @@ public class Ghost {
         double distanceX = Math.abs(pacx - view.getX());
         double distanceY = Math.abs(pacy - view.getY());
         
-        double rectx1 = App.rect.getX();
-        double rectx2 = rectx1 + App.rect.getWidth();
+        double rectx1; 
+        double rectx2; 
         
-        double recty1 = App.rect.getY();
-        double recty2 = recty1 + App.rect.getHeight(); 
+        double recty1; 
+        double recty2; 
         
         double ghostx = view.getX();
         double ghosty = view.getY();

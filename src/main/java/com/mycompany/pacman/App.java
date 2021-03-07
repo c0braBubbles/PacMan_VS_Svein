@@ -67,12 +67,13 @@ public class App extends Application {
         MrPac pacman = new MrPac();
         pacman.setSpeed(3);
                 
+         
         double xpos = SIZE_X/2, ypos = SIZE_Y/2; 
-        Red red    = new Red(paths[0], xpos, ypos);
+        Red red = new Red(paths[0], xpos, ypos);
         red.setSpeed(1.0);
-        Ghost blue   = new Ghost(paths[1], xpos + 100, ypos);
+        Blue blue = new Blue(paths[1], xpos + 100, ypos);
         blue.setSpeed(1.0);
-        Ghost green  = new Ghost(paths[2], xpos - 100, ypos);
+        Ghost green = new Ghost(paths[2], xpos - 100, ypos);
         green.setSpeed(1.0);
         Ghost yellow = new Ghost(paths[3], xpos - 200, ypos);
         yellow.setSpeed(1.0);
