@@ -1,42 +1,24 @@
 package com.mycompany.pacman;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.ParallelTransition;
-import javafx.animation.Timeline;
 import javafx.application.Application;
-import javafx.event.EventHandler;
-import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Arc;
-import javafx.scene.shape.ArcType;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 
 /**
  * JavaFX App
  */
 public class App extends Application {
-    
+    /*
     public static Rectangle rect;
     public static Rectangle rect2;
     public static Rectangle rect3;
+    */
     public static ArrayList<Rectangle> rectangles = new ArrayList<Rectangle>();
     
     /**
@@ -53,7 +35,7 @@ public class App extends Application {
     public static Circle bigCir, bigCir2;
     public static ArrayList<Circle> bigCircles = new ArrayList<Circle>();
     
-    public static final int SIZE_X = 800, SIZE_Y = 800;
+    public static final int SIZE_X = 600, SIZE_Y = 600;
     public static BorderPane root;
     public static MapPane mp;
     
@@ -85,7 +67,6 @@ public class App extends Application {
         MrPac pacman = new MrPac();
         pacman.setSpeed(3);
                 
-        /*
         double xpos = SIZE_X/2, ypos = SIZE_Y/2; 
         Red red    = new Red(paths[0], xpos, ypos);
         red.setSpeed(1.0);
@@ -95,11 +76,9 @@ public class App extends Application {
         green.setSpeed(1.0);
         Ghost yellow = new Ghost(paths[3], xpos - 200, ypos);
         yellow.setSpeed(1.0);
-        Ghost shit = new Ghost(paths[4], xpos + 200, ypos);
-        */
         
         root.setCenter(mp); 
-        mp.getChildren().addAll(pacman.getMrPac()/*, red.getImageView(), blue.getImageView(), green.getImageView(), yellow.getImageView(), shit.getImageView()*/); 
+        mp.getChildren().addAll(pacman.getMrPac(), red.getImageView(), blue.getImageView(), green.getImageView(), yellow.getImageView()); 
         
         
         /* Teste kræsj med rektangler *//*
