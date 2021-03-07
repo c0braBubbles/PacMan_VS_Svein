@@ -31,6 +31,8 @@ import javafx.util.Duration;
 
 /**
  * JavaFX App
+ * @author Mats
+ * @author Svein
  */
 public class App extends Application {
     
