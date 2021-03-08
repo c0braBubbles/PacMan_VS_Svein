@@ -17,31 +17,12 @@ import javafx.stage.Stage;
  * @author Svein
  */
 public class App extends Application {
-    /*
-    public static Rectangle rect;
-    public static Rectangle rect2;
-    public static Rectangle rect3;
-    */
-    public static ArrayList<Rectangle> rectangles = new ArrayList<Rectangle>();
-    
-    /**
-     * De små sirklene
-     * som bare gir deg litt poeng
-     */
-    public static ArrayList<Circle> circles = new ArrayList<Circle>();
-    
-    /**
-     * De store sirklene 
-     * som får spøkelsene til å flykte 
-     */
-    public static Circle bigCir, bigCir2;
-    public static ArrayList<Circle> bigCircles = new ArrayList<Circle>();
+
     
     public static final int SIZE_X = 600, SIZE_Y = 600;
     public static final int SIZE_X_GRID = 460, SIZE_Y_GRID = 560;
-    public static BorderPane root;
-    public static Pane wrapperPane;
-    public static MapPane mp;
+    static BorderPane root;
+    static MapPane mp;
     
     public static String[] paths = {
         "src/main/java/com/mycompany/pacman/red.png",
@@ -68,33 +49,11 @@ public class App extends Application {
         Scene scene = new Scene(root, SIZE_X, SIZE_Y); 
         stage.setScene(scene);
         stage.setTitle("Pac-Man");
-        
-        
-        MrPac pacman = new MrPac();
-        pacman.setSpeed(2);
-                
-
-        
-        
-
-
-        
+ 
         root.setCenter(mp);  
-            mp.getChildren().addAll(
-                pacman.getMrPac(), 
-                red.getImageView(), 
-                blue.getImageView(), 
-                green.getImageView(), 
-                yellow.getImageView()
-            );
-        
+     
         stage.show();
-        pacman.startAnimation();
-        pacman.setMovement();
-        red.chase(pacman);
-        blue.chase(pacman);
-        green.chase(pacman);
-        yellow.chase(pacman);
+        
     }
     
 

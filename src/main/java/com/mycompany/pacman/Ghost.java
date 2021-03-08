@@ -32,6 +32,8 @@ public class Ghost {
     protected final int SIZE = 50; // alle blir like store 
 
     
+    Ghost() {}
+    
     /**
      * Dette er konstruktør til spøkelse objekt
      * får inn nødvendige variabler til å legge til bilde 
@@ -39,19 +41,10 @@ public class Ghost {
      * legger path inn i en stream
      * 
      * @param path filsti til bilde (png)
-     * @param xpos start posisjon x-kordinat
-     * @param ypos start posisjon y-kordinat
      * @throws FileNotFoundException 
      */
-    public Ghost(String path) throws FileNotFoundException {
-        this.path   = path; 
-        this.xpos   = getSpawn().getX(); 
-        this.ypos   = getSpawn().getY();
-        stream      = new FileInputStream(path); 
-        image       = new Image(stream); 
-        
-        setImageView(SIZE, SIZE);
-    }
+    
+    Ghost(String path){}
     
     /**
      * Dette er konstruktør til spøkelse objekt
@@ -193,7 +186,7 @@ public class Ghost {
     
     
     public boolean canWalk() {
-        for(Rectangle rect: App.rectangles) {
+        for(Rectangle rect: Map.getRectangles()) {
             if(view.getX() < rect.getX() || view.getX() > rect.getX() + rect.getWidth())
                 if(view.getY() < rect.getY() || view.getY() > rect.getY() + rect.getHeight())
                     return false; 
@@ -213,7 +206,7 @@ public class Ghost {
      * @throws FileNotFoundException nødvendig for å legge inn bilde i view
      */
     public void ohhShit(MrPac pacman) throws FileNotFoundException {
-        for(Circle cir: App.circles) {
+        for(Circle cir: Map.getBigCircles()) {
             if(pacman.hitCircle(cir) && cir.getRadius() > 15) {
                 stream = new FileInputStream(App.paths[4]); 
                 image = new Image(stream);
@@ -253,7 +246,7 @@ public class Ghost {
                 }
                 image = new Image(stream);
                 view.setImage(image);
-                App.circles.remove(cir);
+                Map.getCircles().remove(cir);
             }
         });
         new Thread(sleeper).start();
@@ -275,10 +268,6 @@ public class Ghost {
         }
         
         return false; 
-    }
-
-    private Object getSpawn() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     private void reSpawn(String path, double xPos, double yPos) {

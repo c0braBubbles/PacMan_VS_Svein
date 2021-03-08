@@ -21,15 +21,19 @@ public class MapStructure {
     protected Object[] dataObject;
     protected String[][] mapData;
     
+    
+    /**
+     * default MapStructure
+     * 
+     */
     public MapStructure(){
         readFile(MAP_DATA_STRUCTURE_FILE);
     }
     
     /**
-     * default MapStructure
+     *
      * @param dataObject
      */
-    
     public MapStructure(Object[] dataObject){
         this.dataObject = dataObject;
     }
@@ -37,10 +41,11 @@ public class MapStructure {
     /**
      * 
      * Leser datastruktur fra fil som string
-     * Datastrukturen blir returnert som Object[],
+     * Datastrukturen blir lagret som Object[],
      * der objektene er String[]
+     * og som String[][]
      * 
-     * @param path er filepath til standard kartfile
+     * @param path er filepath til kartfil
      *
      */
     protected final void readFile(String path){
@@ -61,6 +66,17 @@ public class MapStructure {
         }
         dataObject = al.toArray();
     }
+    
+    
+    /**
+     * 
+     * Data rett fra fil i objekt liste form
+     * 
+     * @return Objekt liste
+     */
+    public Object[] getDataObject() {
+        return dataObject;
+    } 
     
     @Override
     public String toString(){

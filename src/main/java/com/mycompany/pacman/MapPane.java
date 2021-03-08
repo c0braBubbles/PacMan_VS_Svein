@@ -7,6 +7,8 @@ import java.io.FileNotFoundException;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
+import javafx.scene.shape.Arc;
+import javafx.scene.shape.ArcType;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 
@@ -16,6 +18,10 @@ import javafx.scene.shape.Rectangle;
  *
  */
 public class MapPane extends Pane {
+    
+    private static Ghost ghost;
+    private static MrPac mrPac;
+    
     private final Color BACKGROUNdD_COLOR;
     private final Color MAIN_COLOR;
     private final Map map;
@@ -58,12 +64,13 @@ public class MapPane extends Pane {
     
     
     /**
-     *
+     * Tegner kart med assets
      */
-    public void drawMap() {
+    void drawMap() {
         App.root.setStyle("-fx-background-color: "
             +BACKGROUNdD_COLOR.toString().replace("0x", "#")
         );
+        int ghostCount = 0;
         for(int i=0;i<map.getMapData().length;i++){
             for(int j=0;j<map.getMapData()[i].length; j++){
                 switch(map.getMapData()[i][j]){
@@ -79,7 +86,9 @@ public class MapPane extends Pane {
                         break;
                     case "X": // tomt
                         break;
-                    case "S": ghostSpawn(j,i);// spøkelse spawn
+                    case "Z": spawn(j,i,false); //pacSpawn
+                        break;
+                    case "S": spawn(j,i,true);// spøkelse spawn
                         break;
                     case "U": //noAccsessPacMan(j,i); // dør spøkelse spawn 
                         break;
@@ -114,7 +123,7 @@ public class MapPane extends Pane {
         rect.setFill(color);
         
         this.getChildren().add(rect);
-        App.rectangles.add(rect);
+        Map.addRectangle(rect);
         System.out.println("x: "+rect.getX()+" y: "+rect.getY());
         
     }
@@ -172,29 +181,81 @@ public class MapPane extends Pane {
         if(notNormalFood){
             Paint color = Color.DARKMAGENTA;
             circle.setFill(color);
-            App.bigCircles.add(circle);
+            Map.addCircle(circle);
         }else if(!notNormalFood){
             Paint color = Color.DARKOLIVEGREEN;
             circle.setFill(color);
-            App.circles.add(circle);
+            Map.addBigCircle(circle);
         }
     }
     
-    private void ghostSpawn(int x, double y){
-        try {
+    @SuppressWarnings("Supicius methode call")
+    private void spawn(int x, double y, boolean isGhost){
+        if(isGhost){
+            try {
+                double scaleY = App.SIZE_Y_GRID/map.getMapData().length;
+                double scaleX = App.SIZE_X_GRID/map.getMapData()[(int)x].length;
+
+                double xpos = scaleX(x,scaleX), ypos = scaleX(y,scaleY);
+                                        // warned
+                if(y==scaleX(x,scaleX)){
+                    // blått spøkelse
+                    ghost  = new Ghost(App.paths[1], xpos, ypos);
+                    ghost.chase(mrPac);
+                    ghost.setSpeed(1.0);
+                    this.getChildren().add(ghost.getImageView());
+                } else                  // warned    
+                if(!this.getChildren().contains(ghost)){
+                    // grønt spøkelse
+                    ghost  = new Ghost(App.paths[2], xpos - 100, ypos);
+                    ghost.setSpeed(1.0);
+                    ghost.chase(mrPac);
+                    this.getChildren().add(ghost.getImageView());
+                } else                  // warned
+                if(!this.getChildren().contains(ghost)){
+                    // gult spøkelse
+                    ghost = new Ghost(App.paths[3], xpos - 200, ypos);
+                    ghost.setSpeed(1.0); 
+                    ghost.chase(mrPac);
+                    this.getChildren().add(ghost.getImageView());
+                }
+            
+            }catch(FileNotFoundException fNfE){
+                System.out.println("No Ghost coming to you, message for you:\n"+ fNfE.getMessage());
+            }
+        }else {
             double scaleY = App.SIZE_Y_GRID/map.getMapData().length;
             double scaleX = App.SIZE_X_GRID/map.getMapData()[(int)x].length;
-
-            double xpos = scaleX(x,scaleX), ypos = scaleX(y,scaleY);
-            Ghost blue   = new Ghost(App.paths[1], xpos + 100, ypos);
-            blue.setSpeed(1.0);
-            Ghost green  = new Ghost(App.paths[2], xpos - 100, ypos);
-            green.setSpeed(1.0);
-            Ghost yellow = new Ghost(App.paths[3], xpos - 200, ypos);
-            yellow.setSpeed(1.0); 
-        }catch(FileNotFoundException fNfE){
-            System.out.println("No Ghost coming to you, message for you:\n"+ fNfE.getMessage());
-        }
+            double dx = scaleX(x,scaleX), dy = scaleX(y,scaleY);
+            pacSpawn((int)dx,(int)dy);
+        }   
+    }
+    
+    private void pacSpawn(int x, int y) {
+        mrPac = new MrPac();
+        mrPac.setSpeed(2);
+        //mrPac.setMovement();
+        
+        double scaleY = App.SIZE_Y_GRID/App.mp.getMap()
+                .getMapData().length;
+        double scaleX = App.SIZE_X_GRID/App.mp.getMap()
+                .getMapData()[(int)x].length;
+        
+        double dx = MapPane.scaleX(x, scaleX);
+        
+        double dy = MapPane.scaleX(y, scaleY);
+        var pac = new Arc(
+                dx+(scaleX/2), 
+                dy+(scaleY/2), 
+                scaleY/2-1, 
+                scaleY/2-1, 15, 300
+        );
+        pac.setStroke(Color.BLACK);
+        pac.setFill(Color.YELLOW);
+        pac.setType(ArcType.ROUND);
+        mrPac.setMrPac(pac);
+        this.getChildren().add(mrPac.getMrPac());
+        mrPac.startAnimation();
     }
 
     private void drawGostSpawn() {
@@ -204,6 +265,8 @@ public class MapPane extends Pane {
     private void noAccsessPacMan(int j, int i) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    
     
     
 }

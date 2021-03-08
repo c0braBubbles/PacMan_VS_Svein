@@ -3,14 +3,21 @@
  */
 package com.mycompany.pacman;
 
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 
 /**
  *
  * @author svein
  */
 public class Map extends MapStructure {
+    
+    private static ArrayList<Rectangle> rectangles = new ArrayList<Rectangle>();
+    private static ArrayList<Circle> circles = new ArrayList<Circle>();
+    private static ArrayList<Circle> bigCircles = new ArrayList<Circle>();
+    
     
     public Map(){
        super();
@@ -21,23 +28,7 @@ public class Map extends MapStructure {
         System.out.println(Arrays.toString(getMapData()[line]));
         return getMapData()[line];
     }
-    
-    
-    
-    public boolean isLegalSpawn(String data, String type) {
-        throw new UnsupportedOperationException("Not supported yet.");
-        /*boolean b = false;
-        for(int i=0; i<Figure.values().length; i++){
-            System.out.print(Figure.values()[i].valueOfLegal(data).name());
-            if(
-                Figure.values()[i].valueOfLegal(data)
-                    .toString().equals(type)
-            )
-                b = true;
-        }
-        return b;
-        */
-    }
+
     
     /**
      * Legger String[] fra dataObject super
@@ -45,7 +36,7 @@ public class Map extends MapStructure {
      * 
      * @param oa er Object[] med String[] som objekter
      */
-    protected final void setMapData(Object[] oa){
+    public final void setMapData(Object[] oa){
         mapData = new String
             [oa.length]
             [((String[])oa[0]).length];
@@ -54,12 +45,97 @@ public class Map extends MapStructure {
         }
     }
     
+
+    /**
+     * 
+     * Liste over pacmat
+     * som bare gir deg litt poeng
+     * 
+     * @return sirkel liste
+     */
+    public static ArrayList<Circle> getCircles() {
+        return circles;
+    }
+
+    /**
+     * Liste over pac ability mat
+     * 
+     * @return sirkel liste
+     */
+    public static ArrayList<Circle> getBigCircles() {
+        return bigCircles;
+    }
+
+    /**
+     * 
+     * Liste over
+     * blokkene som kartet er bygget opp av
+     * 
+     * @return rektangel liste
+     */
+    public static ArrayList<Rectangle> getRectangles() {
+        return rectangles;
+    }
+
+    /**
+     * 
+     * Liste over pac ability mat
+     * 
+     * @param bigCircles
+     */
+    public static void setBigCircles(ArrayList<Circle> bigCircles) {
+        Map.bigCircles = bigCircles;
+    }
+
+    /**
+     * 
+     * Liste over pacmat
+     * som bare gir deg litt poeng
+     * 
+     * @param circles
+     */
+    public static void setCircles(ArrayList<Circle> circles) {
+        Map.circles = circles;
+    }
+
+    /**
+     * 
+     * Liste over
+     * blokkene som kartet er bygget opp av
+     * 
+     * @param rectangles
+     */
+    public static void setRectangles(ArrayList<Rectangle> rectangles) {
+        Map.rectangles = rectangles;
+    }
+    
+    /**
+     *
+     * @return
+     */
     public String[][] getMapData(){
         return mapData;
     }
     
-    public void genrateNewMap() throws NoSuchMethodException {
+    /**
+     *
+     * @throws NoSuchMethodException
+     */
+    void genrateNewMap() throws NoSuchMethodException {
       throw new NoSuchMethodException("No methode");
+    }
+    
+    
+    static boolean addCircle(Circle circle) {
+        return circles.add(circle);
+    }
+
+    static boolean addBigCircle(Circle circle) {
+        return bigCircles.add(circle);
+    }
+
+    static boolean addRectangle(Rectangle rect) {
+        return rectangles.add(rect);
     }
     
 }
