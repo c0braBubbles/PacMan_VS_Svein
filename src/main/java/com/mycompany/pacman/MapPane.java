@@ -112,8 +112,8 @@ public class MapPane extends Pane {
         
         var circle = 
             (notNormalFood)
-                ?new Circle(dx+(scaleX/2),dy+(scaleY/2),7)
-                :new Circle(dx+(scaleX/2),dy+(scaleY/2),4)
+                ?new Circle(dx+(scaleX/2),dy+(scaleY/2),10)
+                :new Circle(dx+(scaleX/2),dy+(scaleY/2),5)
             ;
         
         System.out.println("x food: "+circle.getCenterX()+" y food: "+circle.getCenterY());
@@ -122,7 +122,7 @@ public class MapPane extends Pane {
         if(notNormalFood){
             Paint color = Color.DARKMAGENTA;
             circle.setFill(color);
-            App.bigCircles.add(circle);
+            App.circles.add(circle);
         }else if(!notNormalFood){
             Paint color = Color.DARKOLIVEGREEN;
             circle.setFill(color);

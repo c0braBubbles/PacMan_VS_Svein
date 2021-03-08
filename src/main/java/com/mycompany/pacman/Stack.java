@@ -8,6 +8,8 @@ package com.mycompany.pacman;
 import java.util.ArrayList;
 
 /**
+ * Ideen bak stack klassen var å bruke den til å samle på highscores
+ * Tradisjonell stack virket derfor mest hennsiktmessig til det formålet
  *
  * @author Mats Engesund
  */

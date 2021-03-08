@@ -108,7 +108,7 @@ public class MrPac {
             public void handle(long currentNanoTime) {
                 double pacX = pacman.getCenterX();
                 double pacY = pacman.getCenterY();
- 
+                
                 for (Circle cir : App.circles) {
                     if(input.contains("LEFT")) {
                         if (canWalk("LEFT")) {
@@ -116,7 +116,7 @@ public class MrPac {
                             pacman.setRotate(-180);
                         }
                         if(hitCircle(cir)) {
-                            App.root.getChildren().remove(cir);
+                            App.mp.getChildren().remove(cir);
                         }
                     }
  
@@ -126,7 +126,7 @@ public class MrPac {
                             pacman.setRotate(0);
                         }
                         if(hitCircle(cir)) {
-                            App.root.getChildren().remove(cir);
+                            App.mp.getChildren().remove(cir); 
                         }
                     }
  
@@ -135,8 +135,8 @@ public class MrPac {
                             pacman.setCenterY(pacY - getSpeed());
                             pacman.setRotate(-90);
                         }
-                        if(hitCircle(cir)) {             
-                            App.root.getChildren().remove(cir); 
+                        if(hitCircle(cir)) {            
+                            App.mp.getChildren().remove(cir);
                         }
                     }
  
@@ -146,10 +146,14 @@ public class MrPac {
                             pacman.setRotate(90);
                         }
                         if(hitCircle(cir)) {
-                            App.root.getChildren().remove(cir);
+                            App.mp.getChildren().remove(cir);
                         }
                     }
                 }
+                /*App.circles.remove(c);
+                if(App.circles.isEmpty()) {
+                    gameOver();
+                }*/
             }
         }.start();
         pacman.requestFocus();
@@ -163,21 +167,14 @@ public class MrPac {
      * @return returnerer true eller false
      */
     public boolean hitCircle(Circle cir) {
-        /*
-        double pacPosX = pacman.getCenterX() + pacman.getRadiusX(); 
-        double pacPosY = pacman.getCenterY() + pacman.getRadiusY(); 
-        
-        double cirPosX = cir.getCenterX() + cir.getRadius(); 
-        double cirPosY = cir.getCenterY() + cir.getRadius(); 
-        */
-        if(pacman.getCenterX() > cir.getCenterX()-cir.getRadius() && pacman.getCenterX() < cir.getCenterX()+cir.getRadius()) {   
+        if(pacman.getCenterX() > cir.getCenterX()-cir.getRadius() && pacman.getCenterX() < cir.getCenterX()+cir.getRadius()) {  
             if(pacman.getCenterY() > cir.getCenterY()-cir.getRadius() && pacman.getCenterY() < cir.getCenterY()+cir.getRadius()) {
                 return true; 
             }
         }
-            
         return false; 
     }
+    
     
     /**
      * sjekker om pacman kan gå eller om det er en vegg foran
