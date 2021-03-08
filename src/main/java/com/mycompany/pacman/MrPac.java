@@ -6,17 +6,12 @@
 package com.mycompany.pacman;
 
 import javafx.animation.*;
-import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Arc;
 import javafx.scene.shape.ArcType;
-import javafx.scene.shape.LineTo;
-import javafx.scene.shape.MoveTo;
-import javafx.scene.shape.Path;
 import javafx.util.Duration;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 
@@ -47,7 +42,7 @@ public class MrPac {
      * Det er oppsettet til å lage et pacman objekt
      */
     public MrPac() {
-        setMrPac(new Arc());
+        setMrPac();
         setAnimation();
     }
  
@@ -108,7 +103,7 @@ public class MrPac {
             public void handle(long currentNanoTime) {
                 double pacX = pacman.getCenterX();
                 double pacY = pacman.getCenterY();
- 
+
                 for (Circle cir : Map.getCircles()) {
                     if(input.contains("LEFT")) {
                         if (canWalk("LEFT")) {
@@ -126,7 +121,7 @@ public class MrPac {
                             pacman.setRotate(0);
                         }
                         if(hitCircle(cir)) {
-                            App.mp.getChildren().remove(cir);
+                            App.mp.getChildren().remove(cir); 
                         }
                     }
  
@@ -135,8 +130,8 @@ public class MrPac {
                             pacman.setCenterY(pacY - getSpeed());
                             pacman.setRotate(-90);
                         }
-                        if(hitCircle(cir)) {             
-                            App.mp.getChildren().remove(cir); 
+                        if(hitCircle(cir)) {            
+                            App.mp.getChildren().remove(cir);
                         }
                     }
  
@@ -150,6 +145,10 @@ public class MrPac {
                         }
                     }
                 }
+                /*App.circles.remove(c);
+                if(App.circles.isEmpty()) {
+                    gameOver();
+                }*/
             }
         }.start();
         pacman.requestFocus();
@@ -163,21 +162,14 @@ public class MrPac {
      * @return returnerer true eller false
      */
     public boolean hitCircle(Circle cir) {
-        /*
-        double pacPosX = pacman.getCenterX() + pacman.getRadiusX(); 
-        double pacPosY = pacman.getCenterY() + pacman.getRadiusY(); 
-        
-        double cirPosX = cir.getCenterX() + cir.getRadius(); 
-        double cirPosY = cir.getCenterY() + cir.getRadius(); 
-        */
-        if(pacman.getCenterX() > cir.getCenterX()-cir.getRadius() && pacman.getCenterX() < cir.getCenterX()+cir.getRadius()) {   
+        if(pacman.getCenterX() > cir.getCenterX()-cir.getRadius() && pacman.getCenterX() < cir.getCenterX()+cir.getRadius()) {  
             if(pacman.getCenterY() > cir.getCenterY()-cir.getRadius() && pacman.getCenterY() < cir.getCenterY()+cir.getRadius()) {
                 return true; 
             }
         }
-            
         return false; 
     }
+    
     
     /**
      * sjekker om pacman kan gå eller om det er en vegg foran
@@ -311,8 +303,25 @@ public class MrPac {
      * 
      * @param pacman Arc inn som er tegnet pacman
      */
-    protected final void setMrPac(Arc pacman) {
-        this.pacman = pacman;
+    protected final void setMrPac() {
+        int x = 1;
+        int y = App.mp.getMap().getMapData().length-2;
+        double scaleY = App.SIZE_Y_GRID/App.mp.getMap().getMapData().length;
+        double scaleX = App.SIZE_X_GRID/App.mp.getMap().getMapData()[(int)x].length;
+        
+        double dx = MapPane.scaleX(x, scaleX);
+        
+        double dy = MapPane.scaleX(y, scaleY);
+        
+        pacman = new Arc(
+                dx+(scaleX/2)+MapPane.TOP_LEFT_EDGE, 
+                dy+(scaleY/2)+MapPane.TOP_LEFT_EDGE,
+                (scaleY/2)-1, 
+                (scaleY/2)-1, 15, 300
+        );
+       pacman.setStroke(Color.BLACK);
+       pacman.setFill(Color.YELLOW);
+       pacman.setType(ArcType.ROUND);
     }
     
  
