@@ -189,7 +189,8 @@ public class MapPane extends Pane {
         }else if(!notNormalFood){
             Paint color = Color.DARKOLIVEGREEN;
             circle.setFill(color);
-            Map.addBigCircle(circle);
+            Map.addCircle(circle);
+            //Map.addBigCircle(circle);
         }
     }
     

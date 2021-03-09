@@ -69,7 +69,7 @@ public class App extends Application {
         
         
         MrPac pacman = new MrPac();
-        pacman.setSpeed(0.5);
+        pacman.setSpeed(3);
                 
 
          
